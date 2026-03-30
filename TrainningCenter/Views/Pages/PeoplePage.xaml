@@ -1,0 +1,499 @@
+﻿<Page x:Class="TrainningCenter.Pages.PeoplePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TrainningCenter.Pages"
+      xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:UClocal="clr-namespace:TrainningCenter.UserControles" 
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1030" 
+      Title="PeoplePage">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/Styles/DataGridStyles.xaml"/>
+                <ResourceDictionary Source="/Views/Styles/ButtonsStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="WatermarkSearchStyle" TargetType="TextBox">
+                <Setter Property="MinWidth" Value="250" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Grid>
+                                <Border x:Name="border" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}" 
+                                SnapsToDevicePixels="True">
+                                    <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                                </Border>
+
+                                <TextBlock x:Name="placeholder" 
+                                   Text="Search by name, email, or phone..." 
+                                   Foreground="#999999" 
+                                   IsHitTestVisible="False" 
+                                   Margin="5,0,0,0"
+                                   VerticalAlignment="Center"
+                                   Visibility="Collapsed"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="Text" Value=""/>
+                                        <Condition Property="IsKeyboardFocusWithin" Value="False"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter TargetName="placeholder" Property="Visibility" Value="Visible"/>
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Enhanced DataGrid Row Style -->
+            <Style x:Key="EnhancedDataGridRow" TargetType="DataGridRow" BasedOn="{StaticResource ModernDataGridRow}">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Margin" Value="0,0,0,1"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#F8F5FE"/>
+                    </Trigger>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#F0EBF8"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- Enhanced Column Header Style -->
+            <Style x:Key="EnhancedColumnHeader" TargetType="DataGridColumnHeader" BasedOn="{StaticResource ModernDataGridColumnHeader}">
+                <Setter Property="Background" Value="#FAFBFC"/>
+                <Setter Property="Foreground" Value="#666666"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Padding" Value="15,0"/>
+                <Setter Property="BorderBrush" Value="#E0E0E0"/>
+                <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            </Style>
+
+            <!-- Enhanced Cell Style -->
+            <Style x:Key="EnhancedCell" TargetType="DataGridCell" BasedOn="{StaticResource ModernDataGridCell}">
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Padding" Value="15,12"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderThickness="0"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+        
+    </Page.Resources>
+
+    <Grid Background="#F5F7FA">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- 1. Top Bar -->
+        <UClocal:TopBar Grid.Row="0" WelcomMessage="Welcome Rajeh" Subtitle="role" />
+
+        <!-- 2. Page Header -->
+        <Grid Grid.Row="1" Margin="30,20,30,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="People" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Left"
+                       Foreground="#202020"
+                       Grid.Column="0"/>
+
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right" 
+                        Grid.Column="1">
+                <Button x:Name="btnUpdate" 
+                        Style="{StaticResource OutlineButton}"
+                        Click="btnUpdate_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Icons:PackIconMaterial Kind="AccountEdit" 
+                                                Margin="0 0 5 0" />
+                        <TextBlock Style="{StaticResource menuButtonTextActive}" 
+                                   Text="Update Person" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+
+                <Button Name="btnAddNewPerson" 
+                        Style="{StaticResource PrimaryButton}" 
+                        Click="btnAddNewPerson_Click" 
+                        Margin="15,0,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Icons:PackIconMaterial Kind="Plus" 
+                                                Margin="0 0 5 0"/>
+                        <TextBlock Text="Add New Person" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+        </Grid>
+
+        <!-- 3. DataGrid Section -->
+        <Border Grid.Row="2"
+                Background="White"
+                CornerRadius="10"
+                Margin="30,0,30,30"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1">
+            <Border.Effect>
+                <DropShadowEffect Color="#000" 
+                                  Opacity="0.08" 
+                                  ShadowDepth="0" 
+                                  BlurRadius="20" />
+            </Border.Effect>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Search and Filter Bar -->
+                <Border Grid.Row="0" 
+                        Background="#FAFBFC"
+                        BorderBrush="#E0E0E0"
+                        BorderThickness="0,0,0,1"
+                        Padding="20,15"
+                        CornerRadius="10,10,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Search Box -->
+                        <Border Background="White"
+                                BorderBrush="#E0E0E0"
+                                BorderThickness="1"
+                                CornerRadius="6"
+                                Padding="12,8"
+                                MaxWidth="400"
+                                HorizontalAlignment="Left">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Icons:PackIconMaterial Kind="Magnify"
+                                                        Width="18"
+                                                        Height="18"
+                                                        Foreground="#999999"
+                                                        VerticalAlignment="Center"
+                                                        Margin="0,0,8,0"/>
+
+                                <TextBox Grid.Column="1"
+                                         x:Name="txtSearch"
+                                         Style="{StaticResource WatermarkSearchStyle}"
+                                         Background="Transparent"
+                                         BorderThickness="0"
+                                         FontSize="14"
+                                         VerticalAlignment="Center"
+                                         TextChanged="txtSearch_TextChanged" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Filter Button -->
+                        <Button Grid.Column="1"
+                                Style="{StaticResource OutlineButton}"
+                                Height="40"
+                                MinWidth="100">
+                            <StackPanel Orientation="Horizontal">
+                                <Icons:PackIconMaterial Kind="Filter"
+                                                        Width="16"
+                                                        Height="16"
+                                                        Margin="0,0,6,0"/>
+                                <TextBlock Text="Filter"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!-- DataGrid -->
+                <DataGrid Grid.Row="1"
+                          x:Name="dgPeople"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          CanUserResizeRows="False"
+                          IsReadOnly="True"
+                          SelectionMode="Single"
+                          GridLinesVisibility="None"
+                          HeadersVisibility="Column"
+                          Background="Transparent"
+                          BorderThickness="0"
+                          RowHeight="60"
+                          RowStyle="{StaticResource EnhancedDataGridRow}"
+                          ColumnHeaderStyle="{StaticResource EnhancedColumnHeader}"
+                          CellStyle="{StaticResource EnhancedCell}"
+                          AlternatingRowBackground="Transparent"
+                          HorizontalGridLinesBrush="#F0F0F0"
+                          VerticalGridLinesBrush="Transparent">
+
+                    <DataGrid.Columns>
+                        <!-- ID Column -->
+                        <DataGridTextColumn Header="ID" 
+                                            Width="70"
+                                            Binding="{Binding Id}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="13"/>
+                                    <Setter Property="Foreground" Value="#666666"/>
+                                    <Setter Property="FontWeight" Value="Medium"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Full Name Column -->
+                        <DataGridTextColumn Header="Full Name" 
+                                            Width="180"
+                                            Binding="{Binding FullName}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="14"/>
+                                    <Setter Property="Foreground" Value="#202020"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- National No Column -->
+                        <DataGridTextColumn Header="National No" 
+                                            Width="140"
+                                            Binding="{Binding NationalNo}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="13"/>
+                                    <Setter Property="Foreground" Value="#666666"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Gender Column -->
+                        <DataGridTextColumn Header="Gender" 
+                                            Width="90"
+                                            Binding="{Binding Gender}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="13"/>
+                                    <Setter Property="Foreground" Value="#666666"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Phone Column -->
+                        <DataGridTextColumn Header="Phone" 
+                                            Width="130"
+                                            Binding="{Binding PhoneNumber}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="13"/>
+                                    <Setter Property="Foreground" Value="#666666"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Email Column -->
+                        <DataGridTextColumn Header="Email" 
+                                            Width="*"
+                                            MinWidth="180"
+                                            Binding="{Binding Email}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="13"/>
+                                    <Setter Property="Foreground" Value="#666666"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Created Date Column -->
+                        <DataGridTextColumn Header="Created" 
+                                            Width="110"
+                                            Binding="{Binding CreatedAt, StringFormat='dd MMM yyyy'}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="12"/>
+                                    <Setter Property="Foreground" Value="#999999"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Actions Column -->
+                        <DataGridTemplateColumn Header="Actions" Width="200">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal"
+                                                HorizontalAlignment="Center">
+
+                                        <!-- View Button -->
+                                        <Button Name="btnView"
+                                                Click="btnView_Click"
+                                                Tag="{Binding Id}"
+                                                ToolTip="View Details"
+                                                Cursor="Hand"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Padding="8,6"
+                                                Margin="0,0,5,0">
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="{TemplateBinding Background}"
+                                                                        BorderThickness="0"
+                                                                        CornerRadius="4"
+                                                                        Padding="{TemplateBinding Padding}">
+                                                                    <ContentPresenter HorizontalAlignment="Center"
+                                                                                    VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#F0EBF8"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Icons:PackIconMaterial Kind="Eye"
+                                                                        Width="16"
+                                                                        Height="16"
+                                                                        Foreground="#8147E7"
+                                                                        Margin="0,0,4,0"/>
+                                                <TextBlock Text="View" 
+                                                           FontSize="13"
+                                                           FontWeight="Medium"
+                                                           Foreground="#8147E7"/>
+                                            </StackPanel>
+                                        </Button>
+
+                                        <!-- Edit Button -->
+                                        <Button Name="btnEdit"
+                                                Click="btnEdit_Click"
+                                                Tag="{Binding Id}"
+                                                ToolTip="Edit Person"
+                                                Cursor="Hand"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Padding="8,6"
+                                                Margin="0,0,5,0">
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="{TemplateBinding Background}"
+                                                                        BorderThickness="0"
+                                                                        CornerRadius="4"
+                                                                        Padding="{TemplateBinding Padding}">
+                                                                    <ContentPresenter HorizontalAlignment="Center"
+                                                                                    VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#E8F5E9"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Icons:PackIconMaterial Kind="Pencil"
+                                                                        Width="16"
+                                                                        Height="16"
+                                                                        Foreground="#4CAF50"
+                                                                        Margin="0,0,4,0"/>
+                                                <TextBlock Text="Edit" 
+                                                           FontSize="13"
+                                                           FontWeight="Medium"
+                                                           Foreground="#4CAF50"/>
+                                            </StackPanel>
+                                        </Button>
+
+                                        <!-- Delete Button -->
+                                        <Button Name="btnDelete"
+                                                Click="btnDelete_Click"
+                                                Tag="{Binding Id}"
+                                                ToolTip="Delete Person"
+                                                Cursor="Hand"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Padding="8,6">
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="{TemplateBinding Background}"
+                                                                        BorderThickness="0"
+                                                                        CornerRadius="4"
+                                                                        Padding="{TemplateBinding Padding}">
+                                                                    <ContentPresenter HorizontalAlignment="Center"
+                                                                                    VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#FFEBEE"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                            <Icons:PackIconMaterial Kind="Delete"
+                                                                    Width="16"
+                                                                    Height="16"
+                                                                    Foreground="#F44336"/>
+                                        </Button>
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+
+                </DataGrid>
+            </Grid>
+
+        </Border>
+
+    </Grid>
+</Page>

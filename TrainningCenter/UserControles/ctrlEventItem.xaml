@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="TrainningCenter.UserControles.ctrlEventItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TrainningCenter.UserControles"
+             xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             x:Name="eventControl"
+             d:DesignWidth="300">
+    <Border Background="{Binding BackgroundColor, ElementName=eventControl}"
+            CornerRadius="12"
+            Padding="20"
+            Margin="0,0,0,12"
+            CacheMode="BitmapCache">
+        <StackPanel>
+            <TextBlock Text="{Binding EventTitle, ElementName=eventControl}"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Foreground="{Binding AccentColor, ElementName=eventControl}"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Icons:PackIconMaterial Kind="Calendar"
+                                        Width="14" Height="14"
+                                        Foreground="{StaticResource TextSecondaryBrush}"
+                                        Margin="0,0,6,0"/>
+                <TextBlock Text="{Binding EventDate, ElementName=eventControl}"
+                           FontSize="13"
+                           Foreground="{StaticResource TextSecondaryBrush}"/>
+            </StackPanel>
+
+            <TextBlock Text="{Binding EventSubtitle, ElementName=eventControl}"
+                       FontSize="12"
+                       Foreground="{StaticResource TextTertiaryBrush}"
+                       Margin="0,6,0,0"/>
+        </StackPanel>
+    </Border>
+</UserControl>

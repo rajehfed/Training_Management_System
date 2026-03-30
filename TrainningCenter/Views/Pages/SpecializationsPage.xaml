@@ -1,0 +1,709 @@
+﻿<Page x:Class="TrainningCenter.Views.Pages.SpecializationsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TrainningCenter.Views.Pages"
+      xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      mc:Ignorable="d" 
+      d:DesignHeight="690" d:DesignWidth="1030"
+      Title="SpecializationsPage"
+      Background="Transparent">
+
+    <Page.Resources>
+        <!--CARD STYLE-->
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Padding" Value="24"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#000000" 
+                                    BlurRadius="20" 
+                                    ShadowDepth="0" 
+                                    Opacity="0.08"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--SPECIALIZATION CARD STYLE-->
+        <Style x:Key="SpecializationCard" TargetType="Border">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#8147E7" Offset="0"/>
+                        <GradientStop Color="#A980F5" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Padding" Value="24"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#8147E7" 
+                                    BlurRadius="20" 
+                                    ShadowDepth="0" 
+                                    Opacity="0.3"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <!-- Hover animation - lift and glow effect -->
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect Color="#8147E7" 
+                                            BlurRadius="30" 
+                                            ShadowDepth="0" 
+                                            Opacity="0.5"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <TranslateTransform Y="-4"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!--PRIMARY BUTTON STYLE-->
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#8147E7"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="24,14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#9A5FF0"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#6F3DC0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!--ICON BUTTON-->
+        <Style x:Key="IconButton" TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="36"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Opacity" Value="0.9"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Background" Value="#F0F0F0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!--MODERN TEXT BOX-->
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Padding" Value="14,12"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10">
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                        Margin="{TemplateBinding Padding}"
+                                        VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#8147E7"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#B8A3E8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!--STAT CARD STYLE-->
+        <Style x:Key="StatCard" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#000000" 
+                                    BlurRadius="15" 
+                                    ShadowDepth="0" 
+                                    Opacity="0.06"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--OUTLINE BUTTON STYLE-->
+        <Style x:Key="ModernIconButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F5F5F5"/>
+                    <Setter Property="BorderBrush" Value="#8147E7"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+
+    <Border CornerRadius="0 0 20 0" ClipToBounds="True" Background="#F5F7FA">
+        <Grid Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!--HEADER SECTION-->
+            <Grid Grid.Row="0" Margin="0 0 0 30">
+                <StackPanel>
+                    <TextBlock Text="Specialization"
+                           FontSize="32"
+                           FontWeight="Bold"
+                           Foreground="#202020"/>
+                    <TextBlock Text="Manage training specializations and categories"
+                           FontSize="15"
+                           Foreground="#666"
+                           Margin="0,6,0,0"/>
+                </StackPanel>
+
+                <!--ADD NEW SPECIALIZATION BUTTON-->
+                <Button Style="{StaticResource PrimaryButton}"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    x:Name="btnAddNewSpecialization"
+                    Click="btnAddNewSpecialization_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Icons:PackIconMaterial Kind="Plus" 
+                                          Width="20" 
+                                          Height="20" 
+                                          Margin="0,0,10,0"/>
+                        <TextBlock Text="Add Specialization" 
+                              VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+
+            <!--STATISTICS DASHBOARD-->
+            <Grid Grid.Row="1" Margin="0,0,0,25">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Total Specializations Card -->
+                <Border Grid.Column="0" 
+                    Style="{StaticResource StatCard}"
+                    Margin="0 0 10 0">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                Margin="0 0 0 12">
+                            <Border Background="#E8E4F3"
+                                CornerRadius="10"
+                                Padding="10">
+                                <Icons:PackIconMaterial Kind="FolderStarMultiple" 
+                                                  Width="22" 
+                                                  Height="22"
+                                                  Foreground="#8147E7"/>
+                            </Border>
+                        </StackPanel>
+                        <TextBlock x:Name="tbTotalCount"
+                               Text="24"
+                               FontSize="28"
+                               FontWeight="Bold"
+                               Foreground="#202020"/>
+                        <TextBlock Text="Total Specializations"
+                               FontSize="13"
+                               Foreground="#999"
+                               Margin="0 4 0 0"/>
+                    </StackPanel>
+                </Border>
+
+                <!--ACTIVE SPECIALIZATION CARD-->
+                <Border Grid.Column="1"
+                    Style="{StaticResource StatCard}"
+                    Margin="0 0 10 0">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                Margin="0 0 0 12">
+                            <Border Background="#E7F6EC"
+                                CornerRadius="10"
+                                Padding="10">
+                                <Icons:PackIconMaterial Kind="CheckCircle" 
+                                                  Width="22" 
+                                                  Height="22"
+                                                  Foreground="#28A745"/>
+                            </Border>
+                        </StackPanel>
+
+                        <TextBlock x:Name="tbActiveCount" 
+                               Text="20"
+                               FontSize="28"
+                               FontWeight="Bold"
+                               Foreground="#28A745"/>
+                        <TextBlock Text="Active Programs" 
+                              FontSize="13" 
+                              Foreground="#999999" 
+                              Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!--TOTAL STUDENTS CARD-->
+                <Border Grid.Column="2"
+                    Style="{StaticResource StatCard}"
+                    Margin="0 0 10 0">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                Margin="0 0 0 12">
+                            <Border Background="#E7F6EC"
+                                CornerRadius="10"
+                                Padding="10">
+                                <Icons:PackIconMaterial Kind="AccountGroup" 
+                                                  Width="22" 
+                                                  Height="22"
+                                                  Foreground="#FF9800"/>
+                            </Border>
+                        </StackPanel>
+                        <TextBlock x:Name="tbTotalStudents"
+                               Text="348"
+                               FontSize="28"
+                               FontWeight="Bold"
+                               Foreground="#FF9800"/>
+                        <TextBlock Text="Enrolled Students" 
+                              FontSize="13" 
+                              Foreground="#999999" 
+                              Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!--RECENT ADDITIONS CARD-->
+                <Border Grid.Column="3"
+                    Style="{StaticResource StatCard}"
+                    Margin="0 0 10 0">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                Margin="0 0 0 12">
+                            <Border Background="#E7F6EC"
+                                CornerRadius="10"
+                                Padding="10">
+                                <Icons:PackIconMaterial Kind="AccountGroup" 
+                                                    Width="22" 
+                                                    Height="22"
+                                                    Foreground="#FF9800"/>
+                            </Border>
+                        </StackPanel>
+                        <TextBlock x:Name="tbRecentCount"
+                               Text="348"
+                               FontSize="28"
+                               FontWeight="Bold"
+                               Foreground="#FF9800"/>
+                        <TextBlock Text="Enrolled Students" 
+                               FontSize="13" 
+                               Foreground="#999999" 
+                               Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!--SEARCH & FILTER BAR-->
+            <Border Grid.Row="2"
+                Style="{StaticResource CardStyle}"
+                Margin="0 0 0 25"
+                Padding="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--SEARCH BOX WITH ICON-->
+                    <Border Grid.Column="0"
+                        Background="#F8F9FA"
+                        CornerRadius="10"
+                        Margin="0 0 15 0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Icons:PackIconMaterial Kind="Magnify" 
+                                              Grid.Column="0"
+                                              Width="20" 
+                                              Height="20" 
+                                              Foreground="#999999" 
+                                              Margin="14,0,0,0"
+                                              VerticalAlignment="Center"/>
+
+                            <TextBox Grid.Column="1"
+                                 Name="txtSearch"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 Padding="12 12"
+                                 FontSize="14"
+                                 VerticalAlignment="Center"
+                                 TextChanged="txtSearch_TextChanged">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="Foreground" Value="#202020"/>
+                                        <Style.Triggers>
+                                            <!-- Placeholder text when empty -->
+                                            <Trigger Property="Text" Value="">
+                                                <Setter Property="Background">
+                                                    <Setter.Value>
+                                                        <VisualBrush Stretch="None" AlignmentX="Left">
+                                                            <VisualBrush.Visual>
+                                                                <TextBlock Text="Search specializations..." 
+                                                                     Foreground="#999999" 
+                                                                     FontSize="14"
+                                                                     Margin="5,0,0,0"/>
+                                                            </VisualBrush.Visual>
+                                                        </VisualBrush>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </Border>
+
+                    <!--STATUS FILTER COMBO BOX-->
+                    <ComboBox Grid.Column="1"
+                          x:Name="cmbStatusFilter"
+                          Height="44"
+                          Background="White"
+                          BorderBrush="#E0E0E0"
+                          BorderThickness="2"
+                          Padding="14 10"
+                          FontSize="14"
+                          Margin="0 0 15 0"
+                          Style="{StaticResource ModernComboBox}"
+                          SelectionChanged="cmbStatusFilter_SelectionChanged">
+                        <ComboBoxItem Content="All Status" IsSelected="True"/>
+                        <ComboBoxItem Content="Active"/>
+                        <ComboBoxItem Content="Inactive"/>
+                    </ComboBox>
+
+                    <!--REFRESH BUTTON-->
+                    <Button Grid.Column="2"
+                        Style="{StaticResource RefreshButton}"
+                        Name="btnRefresh"
+                        Click="btnRefresh_Click">
+                        <Icons:PackIconMaterial Kind="Refresh" 
+                                          Width="18" 
+                                          Height="18"
+                                          Foreground="#666666"/>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="3">
+                <!--SPECIALIZATION CARDS GRID-->
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled"
+                          x:Name="scrollViewerContent">
+                    <ItemsControl x:Name="itemSpecialization">
+                        <!--ITEMS PANEL-->
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <!--ITEM TEMPLATE-->
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <!--SPECIALIZATION CARD TEMPLATE-->
+                                <Border Style="{StaticResource SpecializationCard}"
+                                    x:Name="SpecializationCard"
+                                    Width="320"
+                                    Margin="0 0 20 20"
+                                    MouseLeftButtonDown="SpecializationCard_MouseLeftButtonDown"
+                                    Tag="{Binding SpecializationId}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!--HEADER SECTION-->
+                                        <Grid Grid.Row="0" Margin="0 0 0 16">
+                                            <!--SPECIALIZATION ICON CIRCLE-->
+                                            <Border Background="White"
+                                                CornerRadius="14"
+                                                Width="56"
+                                                Height="56"
+                                                HorizontalAlignment="Left"
+                                                Opacity="0.95">
+                                                <Icons:PackIconMaterial Kind="School" 
+                                                      Width="28" 
+                                                      Height="28"
+                                                      Foreground="#8147E7"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"/>
+                                            </Border>
+
+                                            <!--ACTIONS BUTTONS (EDIT & DELETE)-->
+                                            <StackPanel Orientation="Horizontal"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Top">
+                                                <!--EDIT BUTTON-->
+                                                <Button x:Name="btnEdit"
+                                                    Style="{StaticResource IconButton}"
+                                                    Margin="0 0 8 0"
+                                                    Click="btnEdit_Click"
+                                                    Tag="{Binding SpecializationId}">
+                                                    <Icons:PackIconMaterial Kind="Pencil" 
+                                                          Width="16" 
+                                                          Height="16" 
+                                                          Foreground="#8147E7"/>
+                                                </Button>
+                                                <!--DELETE BUTTON-->
+                                                <Button Style="{StaticResource IconButton}"
+                                                    x:Name="btnClick"
+                                                    Click="btnClick_Click"
+                                                    Tag="{Binding SpecializationId}">
+                                                    <Icons:PackIconMaterial Kind="Delete" 
+                                                          Width="16" 
+                                                          Height="16" 
+                                                          Foreground="#DC3545"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <!--TITLE SECTION: Specialization Name-->
+                                        <TextBlock Grid.Row="1"
+                                               Text="{Binding Name}"
+                                               FontSize="20"
+                                               FontWeight="Bold"
+                                               Foreground="White"
+                                               TextWrapping="Wrap"
+                                               Margin="0 0 0 10"/>
+
+                                        <!--DESCRIPTION SECTION: Specialization Description-->
+                                        <TextBlock Grid.Row="2"
+                                               Text="{Binding Description}"
+                                               FontSize="13"
+                                               Foreground="White"
+                                               Opacity="0.85"
+                                               TextWrapping="Wrap"
+                                               LineHeight="20"
+                                               Margin="0 0 0 20"/>
+
+                                        <!--FOOTER SECTION: Stat + Status-->
+                                        <Grid Grid.Row="3">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!--STUDENT COUNT BADGE-->
+                                            <Border Grid.Column="0"
+                                                Background="White"
+                                                CornerRadius="8"
+                                                Padding="10, 6"
+                                                HorizontalAlignment="Left"
+                                                Opacity="0.95">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Icons:PackIconMaterial Kind="AccountGroup" 
+                                                          Width="16" 
+                                                          Height="16"
+                                                          Foreground="#8147E7"
+                                                          Margin="0,0,6,0"
+                                                          VerticalAlignment="Center"/>
+
+                                                    <TextBlock Text="{Binding StudentCount}"
+                                               FontWeight="SemiBold"
+                                               FontSize="13"
+                                               Foreground="#8147E7"
+                                               VerticalAlignment="Center"/>
+                                                    <TextBlock Text=" Students"
+                                               FontSize="13"
+                                               Foreground="#666"
+                                               VerticalAlignment="Center"
+                                               Margin="2 0 0 0"/>
+                                                </StackPanel>
+                                            </Border>
+
+                                            <!--STUDENT INDECATOR-->
+                                            <Border Grid.Column="1"
+                                                Background="White"
+                                                CornerRadius="8"
+                                                Padding="10,6"
+                                                Opacity="0.95">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <!--STATUS DOT-->
+                                                    <Ellipse Width="8"
+                                             Height="8"
+                                             Margin="0 0 6 0"
+                                             VerticalAlignment="Center">
+                                                        <Ellipse.Style>
+                                                            <Style TargetType="Ellipse">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                                                        <Setter Property="Fill" Value="#28A745"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding IsActive}" Value="False">
+                                                                        <Setter Property="Fill" Value="#DC3545"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Ellipse.Style>
+                                                    </Ellipse>
+
+                                                    <!--STATUS TEXT-->
+                                                    <TextBlock FontWeight="SemiBold"
+                                               FontSize="12"
+                                               VerticalAlignment="Center">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                                                        <Setter Property="Text" Value="Active"/>
+                                                                        <Setter Property="Foreground" Value="#28A745"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding IsActive}" Value="False">
+                                                                        <Setter Property="Text" Value="Inactive"/>
+                                                                        <Setter Property="Foreground" Value="#DC3545"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+                <!--EMPTY STATE-->
+                <Border x:Name="pnlEmptyState"
+                    Background="White"
+                    CornerRadius="16"
+                    Padding="60"
+                    Visibility="Collapsed"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#000000" 
+                        BlurRadius="20" 
+                        ShadowDepth="0" 
+                        Opacity="0.08"/>
+                    </Border.Effect>
+
+                    <StackPanel HorizontalAlignment="Center"
+                Width="400">
+                        <!--EMPTY STATE ICON-->
+                        <Border Background="#F0EDFF"
+                            CornerRadius="50"
+                            Width="100" Height="100"
+                            HorizontalAlignment="Center"
+                            Margin="0 0 0 24">
+                            <Icons:PackIconMaterial Kind="FolderOpen" 
+                                  Width="50" 
+                                  Height="50"
+                                  Foreground="#8147E7"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                        </Border>
+
+                        <!--EMPTY STATE TITLE-->
+                        <TextBlock Text="No Specializations Yet"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="#202020"
+                               TextAlignment="Center"
+                               Margin="0 0 0 12"/>
+
+                        <!--EMPTY STATE DESCRIPTION-->
+                        <TextBlock Text="Start building your training programs by adding your first specialization. Click the button below to get started." 
+                               FontSize="14" 
+                               Foreground="#666666"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"
+                               LineHeight="22"
+                               Margin="0,0,0,30"/>
+
+                        <!--ADD FIRST SPECIALIZATION BUTTON-->
+                        <Button Style="{StaticResource PrimaryButton}"
+                            Name="btnAddFirstSpecialization"
+                            HorizontalAlignment="Center"
+                            Click="btnAddSpecialization_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Icons:PackIconMaterial Kind="Plus" 
+                                      Width="18" 
+                                      Height="18" 
+                                      Margin="0,0,8,0"/>
+                                <TextBlock Text="Add Your First Specialization"
+                                       VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+        </Grid>
+    </Border>
+</Page>

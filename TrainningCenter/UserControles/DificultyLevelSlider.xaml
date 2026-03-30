@@ -1,0 +1,249 @@
+﻿<!--
+═══════════════════════════════════════════════════════════════════════════════
+    DIFFICULTY LEVEL SLIDER - Training Center Application
+    
+    A custom slider control for selecting specialization difficulty levels:
+    - Beginner (Level 1) - Green
+    - Medium (Level 2) - Orange
+    - Hard (Level 3) - Red
+    
+    Features:
+    - Visual color coding
+    - Icon indicators
+    - Smooth animations
+    - Clear labels
+    
+    Usage in XAML:
+    <local:DifficultyLevelSlider x:Name="difficultySlider" 
+                                 SelectedLevel="1"/>
+    
+    Usage in C#:
+    int level = difficultySlider.SelectedLevel; // Gets 1, 2, or 3
+    difficultySlider.SelectedLevel = 2; // Sets to Medium
+    
+    Author: Training Center Team "Fedili Rajeh"
+    Version: 1.0
+═══════════════════════════════════════════════════════════════════════════════
+-->
+    
+<UserControl x:Class="TrainningCenter.UserControles.DificultyLevelSlider"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TrainningCenter.UserControles"
+             xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             d:DesignHeight="130" d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <!--
+        ═══════════════════════════════════════════════════════════════════════
+            LEVEL BUTTON STYLE
+            Used for each difficulty level button
+        ═══════════════════════════════════════════════════════════════════════
+        -->
+
+        <Style x:Key="LevelButtonStyle" TargetType="RadioButton">
+            <Setter Property="Width" Value="110"/>
+            <Setter Property="Height" Value="95"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="GroupName" Value="DifficultyLevel"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="border"
+                                Background="White"
+                                BorderBrush="#E0E0E0"
+                                BorderThickness="2"
+                                CornerRadius="12"
+                                Padding="12">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Icon Container -->
+                                <Border Grid.Row="0"
+                                       x:Name="iconContainer"
+                                       Background="#F0F0F0"
+                                       CornerRadius="10"
+                                       Width="40"
+                                       Height="40"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,8">
+                                    <ContentPresenter x:Name="iconPresenter"
+                                                    Content="{TemplateBinding Tag}"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"/>
+                                </Border>
+
+                                <!-- Level Name -->
+                                <TextBlock Grid.Row="2"
+                                          x:Name="levelName"
+                                          Text="{TemplateBinding Content}"
+                                          FontSize="13"
+                                          FontWeight="SemiBold"
+                                          Foreground="#666666"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Hover Effect -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#8147E7"/>
+                                <Setter TargetName="border" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+
+                            <!-- Selected State -->
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="border" Property="BorderThickness" Value="3"/>
+                                <Setter TargetName="levelName" Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        MAIN LAYOUT
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <StackPanel>
+        <!--LABEL-->
+        <TextBlock Text="Difficulty Level"
+                   FontWeight="SemiBold"
+                   FontSize="13"
+                   Foreground="#202020"
+                   Margin="0,0,0,12"/>
+        
+        <!--LEVEL SECTION GRID-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--
+            ═══════════════════════════════════════════════════════════════════
+                BEGINNER LEVEL (Level 1)
+            ═══════════════════════════════════════════════════════════════════
+            -->
+            <RadioButton Grid.Column="0"
+                         x:Name="rbBeginner"
+                         Content="Beginner"
+                         Style="{StaticResource LevelButtonStyle}"
+                         Checked="LevelChanged">
+                <RadioButton.Tag>
+                    <Icons:PackIconMaterial Kind="SeedOutline" 
+                                          Width="22" 
+                                          Height="22"
+                                          Foreground="#28A745"/>
+                </RadioButton.Tag>
+                <RadioButton.Resources>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked, ElementName=rbBeginner}" Value="True">
+                                <Setter Property="BorderBrush" Value="#28A745"/>
+                                <Setter Property="Background" Value="#E7F6EC"/>
+                                <Setter Property="BorderThickness" Value="3" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </RadioButton.Resources>
+            </RadioButton>
+
+            <!--
+            ═══════════════════════════════════════════════════════════════════
+                MEDIUM LEVEL (Level 2)
+            ═══════════════════════════════════════════════════════════════════
+            -->
+            <RadioButton Grid.Column="2"
+                        x:Name="rbMedium"
+                        Content="Medium"
+                        Style="{StaticResource LevelButtonStyle}"
+                        Checked="LevelChanged">
+                <RadioButton.Tag>
+                    <Icons:PackIconMaterial Kind="Fire" 
+                                          Width="22" 
+                                          Height="22"
+                                          Foreground="#FF9800"/>
+                </RadioButton.Tag>
+                <RadioButton.Resources>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked, ElementName=rbMedium}" Value="True">
+                                <Setter Property="BorderBrush" Value="#FF9800"/>
+                                <Setter Property="Background" Value="#FFF3E0"/>
+                                <Setter Property="BorderThickness" Value="3" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </RadioButton.Resources>
+            </RadioButton>
+
+            <!--
+            ═══════════════════════════════════════════════════════════════════
+                HARD LEVEL (Level 3)
+            ═══════════════════════════════════════════════════════════════════
+            -->
+            <RadioButton Grid.Column="4"
+                        x:Name="rbHard"
+                        Content="Hard"
+                        Style="{StaticResource LevelButtonStyle}"
+                        Checked="LevelChanged">
+                <RadioButton.Tag>
+                    <Icons:PackIconMaterial Kind="Flash" 
+                                          Width="22" 
+                                          Height="22"
+                                          Foreground="#DC3545"/>
+                </RadioButton.Tag>
+                <RadioButton.Resources>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked, ElementName=rbHard}" Value="True">
+                                <Setter Property="BorderBrush" Value="#DC3545"/>
+                                <Setter Property="Background" Value="#FFE5E5"/>
+                                <Setter Property="BorderThickness" Value="3" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </RadioButton.Resources>
+            </RadioButton>
+        </Grid>
+
+        <!-- Description Text (Optional - shows based on selection) -->
+        <Border x:Name="pnlDescription"
+                Background="#F8F9FA"
+                CornerRadius="8"
+                Padding="12,10"
+                Margin="0,12,0,0"
+                Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal">
+                <Icons:PackIconMaterial x:Name="descIcon"
+                                      Kind="InformationOutline" 
+                                      Width="16" 
+                                      Height="16"
+                                      Foreground="#666666"
+                                      Margin="0,0,8,0"
+                                      VerticalAlignment="Center"/>
+                <TextBlock x:Name="txtDescription"
+                          Text="Select a difficulty level"
+                          FontSize="12"
+                          Foreground="#666666"
+                          TextWrapping="Wrap"
+                          VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

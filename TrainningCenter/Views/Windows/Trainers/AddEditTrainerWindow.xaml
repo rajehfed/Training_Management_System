@@ -1,0 +1,391 @@
+﻿<Window x:Class="TrainningCenter.Views.Windows.Trainers.AddEditTrainerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TrainningCenter.Views.Windows.Trainers"
+        xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:uc="clr-namespace:TrainningCenter.UserControles"
+        mc:Ignorable="d"
+        Title="Add New Trainer"
+        Height="750"
+        Width="950"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Window.Resources>
+        <Style x:Key="ErrorText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource DangerBrush}"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Margin" Value="0,4,0,0"/>
+            <Setter Property="Visibility" Value="Collapsed"/>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="White"
+            CornerRadius="20"
+            BorderBrush="{StaticResource InfoBrush}"
+            BorderThickness="2">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!--
+            ═══════════════════════════════════════════════════════════════════════════
+                HEADER SECTION
+                    Title, Subtitle
+                    Close Button
+            ═══════════════════════════════════════════════════════════════════════════
+            -->
+            <Border Grid.Row="0"
+                    Background="{StaticResource InfoBrush}"
+                    CornerRadius="18 18 0 0"
+                    Padding="32,24">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0"
+                            Background="White"
+                            Width="48"
+                            Height="48"
+                            CornerRadius="24"
+                            Margin="0,0,16,0">
+                        <Icons:PackIconMaterial x:Name="iconHeader"
+                                                Kind="AccountTie"
+                                                Width="24"
+                                                Height="24"
+                                                Foreground="{StaticResource InfoBrush}"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock x:Name="tbTitle"
+                                   Text="Add New Trainer"
+                                   FontSize="24"
+                                   FontWeight="SemiBold"
+                                   Foreground="White"/>
+                        <TextBlock x:Name="tbSubtitle"
+                                   Text="Fill in the trainer information below"
+                                   FontSize="13"
+                                   Foreground="{StaticResource BorderBrush}"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <Button Grid.Column="2"
+                            Style="{StaticResource CloseButton}"
+                            Name="btnClose"
+                            Click="btnClose_Click">
+                        <Icons:PackIconMaterial Kind="Close"
+                                                Width="18"
+                                                Height="18"
+                                                Foreground="White"/>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!--
+            ═══════════════════════════════════════════════════════════════════════════
+                FORM SECTION
+                    Person Selector,
+                    Professional Informations,
+                    Center & Salary,
+                    Rating,
+                    Biography,
+                    Active Status,
+                    Info Panel
+            ═══════════════════════════════════════════════════════════════════════════
+            -->
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto"
+                          Padding="32,24">
+                <StackPanel>
+                    <!--PERSON SELECTOR-->
+                    <uc:PersonSelector x:Name="personSelector" PersonSelectionChanged="personSelector_PersonSelectionChanged"/>
+
+                    <!--PROFESSIONAL INFORMATION-->
+                    <TextBlock Text="Professional Information"
+                               Style="{StaticResource SectionHeader}"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--SPECIALIZATION-->
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Specialization *"
+                                       Style="{StaticResource FormLabel}"/>
+                            <TextBox x:Name="txtSpecialization"
+                                     Style="{StaticResource ModernTextBox}"
+                                     Tag="e.g., Programming, AI, Design"
+                                     Text="{Binding Specialization}"/>
+                            <TextBlock x:Name="errorSpecialization"
+                                       Text="Specialization is required"
+                                       Style="{StaticResource ErrorText}"/>
+                        </StackPanel>
+
+                        <!--EXPERIENCE YEARS-->
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Years of Experience *"
+                                       Style="{StaticResource FormLabel}"/>
+                            <TextBox x:Name="txtExperienceYears"
+                                     Style="{StaticResource ModernTextBox}"
+                                     Tag="e.g., 5"
+                                     Text="{Binding ExperienceYears}"/>
+                            <TextBlock x:Name="errorExperience"
+                                       Text="Please enter valid years"
+                                       Style="{StaticResource ErrorText}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,16,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--QUALIFICATIONS-->
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Qualifications"
+                                       Style="{StaticResource FormLabel}"/>
+                            <TextBox x:Name="txtQualifications"
+                                     Style="{StaticResource ModernTextBox}"
+                                     Tag="e.g., PhD, Master's"
+                                     Text="{Binding Qualifications}"/>
+                        </StackPanel>
+                        
+                        <!--HIRE DATE-->
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Hire Date *"
+                                       Style="{StaticResource FormLabel}"/>
+                            <DatePicker x:Name="dpHireDate"
+                                        Style="{StaticResource FormDatePicker}"
+                                        SelectedDate="{Binding HireDate}"/>
+                            <TextBlock x:Name="errorHireDate"
+                                       Text="Hire date is required"
+                                       Style="{StaticResource ErrorText}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!--CENTER & SALARY-->
+                    <Grid Margin="0,16,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--CENTER-->
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Training Center"
+                                       Style="{StaticResource FormLabel}"/>
+                            <ComboBox x:Name="cmbCenter"
+                                      Style="{StaticResource ModernComboBox}"
+                                      DisplayMemberPath="DisplayName"
+                                      SelectedValuePath="CenterID"
+                                      SelectedValue="{Binding CenterID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            </ComboBox>
+                        </StackPanel>
+
+                        <!--SALARY-->
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Monthly Salary *"
+                                       Style="{StaticResource FormLabel}"/>
+                            <Grid>
+                                <TextBox x:Name="txtSalary"
+                                         Style="{StaticResource ModernTextBox}"
+                                         Padding="44,13,16,13"
+                                         Tag="0.00"
+                                         Text="{Binding Salary}"/>
+                                <Icons:PackIconMaterial Kind="CurrencyUsd"
+                                                        Width="18"
+                                                        Height="18"
+                                                        Foreground="{StaticResource TextSecondaryBrush}"
+                                                        VerticalAlignment="Center"
+                                                        Margin="16,0,0,0"
+                                                        IsHitTestVisible="False"/>
+                            </Grid>
+                            <TextBlock x:Name="errorSalary"
+                                       Text="Please enter valid salary"
+                                       Style="{StaticResource ErrorText}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!--RATING (Read-only for new, editable for edit)-->
+                    <StackPanel Margin="0 16 0 0">
+                        <TextBlock Text="Performance Rating"
+                                   Style="{StaticResource FormLabel}"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0 0 16 0">
+                                <TextBlock x:Name="tbRating"
+                                           Text="5.0"
+                                           FontSize="32"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource WarningBrush}"
+                                           VerticalAlignment="Center"/>
+                                <Icons:PackIconMaterial Kind="Star"
+                                                        Width="24"
+                                                        Height="24"
+                                                        Foreground="{StaticResource WarningBrush}"
+                                                        VerticalAlignment="Center"
+                                                        Margin="8,0,0,0"/>
+                            </StackPanel>
+
+                            <Slider x:Name="sliderRating"
+                                    Grid.Column="1"
+                                    Minimum="0"
+                                    Maximum="5"
+                                    Value="{Binding Rating}"
+                                    TickFrequency="0.5"
+                                    IsSnapToTickEnabled="True"
+                                    VerticalAlignment="Center"
+                                    ValueChanged="sliderRating_ValueChanged"/>
+                        </Grid>
+                        <TextBlock Text="Rate from 0 to 5 stars"
+                                   FontSize="11"
+                                   Foreground="{StaticResource TextTertiaryBrush}"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+
+                    <!--BIOGRAPHY-->
+                    <StackPanel Margin="0,16,0,0">
+                        <TextBlock Text="Biography / About"
+                                   Style="{StaticResource FormLabel}"/>
+                        <TextBox x:Name="txtBiography"
+                                 Style="{StaticResource MultiLineTextBox}"
+                                 Height="100"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 VerticalScrollBarVisibility="Auto"
+                                 Tag="Write a brief biography..."
+                                 Text="{Binding Biography}"/>
+                    </StackPanel>
+
+                    <!--ACTIVE STATUS-->
+                    <CheckBox x:Name="chkIsActive"
+                              Content="Trainer is currently active"
+                              Style="{StaticResource ModernCheckBox}"
+                              IsChecked="True"
+                              Margin="0,20,0,0"/>
+
+                    <!--INFO PANEL-->
+                    <Border Style="{StaticResource InfoPanel}"
+                            Margin="0,20,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Icons:PackIconMaterial Kind="InformationOutline"
+                                                    Width="20"
+                                                    Height="20"
+                                                    Foreground="{StaticResource InfoBrush}"
+                                                    VerticalAlignment="Top"
+                                                    Margin="0,0,12,0"/>
+                            <TextBlock TextWrapping="Wrap"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       FontSize="12">
+                                <Run Text="Fields marked with"/>
+                                <Run Text="*" FontWeight="Bold" Foreground="{StaticResource DangerBrush}"/>
+                                <Run Text="are required. The rating can be adjusted based on trainer performance."/>
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!--
+            ═══════════════════════════════════════════════════════════════════════════
+                FOOTER SECTION
+                    Delete Button "Edit Mode Only",
+                    Actions Button Save & Cancel
+            ═══════════════════════════════════════════════════════════════════════════
+            -->
+            <Border Grid.Row="2"
+                    Background="{StaticResource PageBackgroundBrush}"
+                    BorderBrush="{StaticResource BorderLightBrush}"
+                    BorderThickness="0,1,0,0"
+                    Padding="32,20"
+                    CornerRadius="0,0,18,18">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--DELETE BUTTON (Edit Mode Only)-->
+                    <Button x:Name="btnDelete"
+                            Grid.Column="0"
+                            Style="{StaticResource DangerButton}"
+                            Content="Delete Trainer"
+                            HorizontalAlignment="Left"
+                            Visibility="Collapsed"
+                            Click="btnDelete_Click"
+                            Padding="20 12">
+                        <Button.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Icons:PackIconMaterial Kind="Delete"
+                                                            Width="16"
+                                                            Height="16"
+                                                            VerticalAlignment="Center"
+                                                            Margin="0,0,8,0"/>
+                                    <TextBlock Text="Delete Trainer"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Button.ContentTemplate>
+                    </Button>
+
+                    <!--ACTION BUTTONS-->
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Button Content="Cancel"
+                                Style="{StaticResource SecondaryButton}"
+                                Name="btnCancel"
+                                Click="btnCancel_Click"
+                                Padding="24,12"
+                                MinWidth="120"
+                                Margin="0 0 12 0"/>
+
+                        <Button x:Name="btnSave"
+                                Content="Save Trainer"
+                                Style="{StaticResource SuccessButton}"
+                                Click="btnSave_Click"
+                                Padding="24,12"
+                                MinWidth="140">
+                            <Button.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Icons:PackIconMaterial Kind="ContentSave"
+                                                                Width="16"
+                                                                Height="16"
+                                                                VerticalAlignment="Center"
+                                                                Margin="0,0,8,0"/>
+                                        <TextBlock Text="Save Trainer"
+                                                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Button.ContentTemplate>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

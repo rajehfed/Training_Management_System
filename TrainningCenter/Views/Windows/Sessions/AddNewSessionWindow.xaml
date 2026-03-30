@@ -1,0 +1,553 @@
+﻿<Window x:Class="TrainningCenter.Views.Windows.Sessions.AddNewSessionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TrainningCenter.Views.Windows.Sessions"
+        xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        mc:Ignorable="d"
+        Title="Create New Session"
+        Height="700" Width="650"
+        MinHeight="500"
+        MinWidth="500"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!-- Time Picker Style -->
+        <Style x:Key="TimePickerStyle" TargetType="ComboBox" BasedOn="{StaticResource ModernComboBox}">
+            <Setter Property="Height" Value="46"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <!-- Section Title Style -->
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="Margin" Value="0,0,0,16"/>
+        </Style>
+
+        <!-- Field Label Style -->
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="White"
+            CornerRadius="24"
+            BorderBrush="{StaticResource PrimaryBrush}"
+            BorderThickness="2"
+            Margin="20">
+        <Border.Effect>
+            <DropShadowEffect Color="#8147E7" 
+                              BlurRadius="10" 
+                              ShadowDepth="0" 
+                              Opacity="0.8"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- HEADER -->
+            <Border Grid.Row="0"
+                    CornerRadius="22 22 0 0"
+                    Padding="30,15"
+                    MouseLeftButtonDown="Border_MouseLeftButtonDown">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#8147E7" Offset="0"/>
+                        <GradientStop Color="#A980F5" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0"
+                            Width="40" Height="40"
+                            CornerRadius="30"
+                            Background="White"
+                            Margin="0,0,10,0">
+                        <Icons:PackIconMaterial Kind="CalendarPlus"
+                                                Width="20" Height="20"
+                                                Foreground="{StaticResource PrimaryBrush}"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"/>
+                    </Border>
+
+                    <!-- Title -->
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="Create New Session"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="White"/>
+                        <TextBlock Text="Schedule a training session for your group"
+                                   FontSize="10"
+                                   Foreground="White"
+                                   Opacity="0.9"
+                                   Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- MAIN CONTENT -->
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto"
+                          Padding="20,22,20,24">
+                <Grid MaxWidth="880">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- SECTION 1: BASIC INFORMATION -->
+                    <Border Grid.Row="0"
+                            Background="{StaticResource PageBackgroundBrush}"
+                            CornerRadius="16"
+                            Padding="20"
+                            Margin="0,0,0,18">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Section Header -->
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0 0 0 14">
+                                <Border Background="{StaticResource PrimaryPaleBrush}"
+                                        CornerRadius="10"
+                                        Padding="7"
+                                        Margin="0,0,5,0">
+                                    <Icons:PackIconMaterial Kind="InformationOutline"
+                                                            Width="24" Height="24"
+                                                            Foreground="{StaticResource PrimaryBrush}"/>
+                                </Border>
+
+                                <TextBlock Text="Basic Information"
+                                           Style="{StaticResource SectionTitle}"
+                                           VerticalAlignment="Center"
+                                           Margin="0"/>
+                            </StackPanel>
+
+                            <!-- Fields Grid -->
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="16"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Group Selection -->
+                                <StackPanel Grid.Column="0" Grid.Row="0">
+                                    <TextBlock Text="Group *" Style="{StaticResource FieldLabel}"/>
+                                    <ComboBox x:Name="cmbGroup"
+                                              ItemsSource="{Binding _groups}"
+                                              SelectedValue="{Binding GroupID, UpdateSourceTrigger=PropertyChanged}"
+                                              SelectionChanged="cmbGroup_SelectionChanged"
+                                              Style="{StaticResource ModernComboBox}"
+                                              DisplayMemberPath="GroupName"
+                                              SelectedValuePath="GroupID"/>
+                                </StackPanel>
+
+                                <!-- Session Type -->
+                                <StackPanel Grid.Column="2" Grid.Row="0">
+                                    <TextBlock Text="Session Type *" 
+                                               Style="{StaticResource FieldLabel}" />
+                                    <ComboBox Name="cmbSessionType" 
+                                              SelectedValue="{Binding SessionType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              Style="{StaticResource ModernComboBox}"/>
+                                </StackPanel>
+
+                                <!-- Topic -->
+                                <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
+                                    <TextBlock Text="Topic *" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox x:Name="txtTopic"
+                                             Text="{Binding Topic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             Style="{StaticResource ModernTextBox}"
+                                             Tag="Enter session topic (e.g., Introduction to Machine Learning)"/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <!-- SECTION 2: SCHEDULE -->
+                    <Border Grid.Row="1"
+                            Background="{StaticResource PageBackgroundBrush}"
+                            CornerRadius="16"
+                            Padding="20"
+                            Margin="0,0,0,18">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Section Header -->
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0 0 0 14">
+                                <Border Background="{StaticResource InfoLightBrush}"
+                                        CornerRadius="10"
+                                        Padding="7"
+                                        Margin="0 0 5 0">
+                                    <Icons:PackIconMaterial Kind="ClockOutline"
+                                                            Width="24" Height="24"
+                                                            Foreground="{StaticResource InfoBrush}"/>
+                                </Border>
+                                <TextBlock Text="Schedule"
+                                           Style="{StaticResource SectionTitle}"
+                                           Foreground="{StaticResource InfoBrush}"
+                                           VerticalAlignment="Center"
+                                           Margin="0"/>
+                            </StackPanel>
+
+                            <!-- Schedule Grid -->
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Session Date -->
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Session Date *" Style="{StaticResource FieldLabel}"/>
+                                    <DatePicker x:Name="dpSessionDate"
+                                                SelectedDate="{Binding SessionDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedDateChanged="dpSessionDate_SelectedDateChanged"
+                                                Style="{StaticResource FormDatePicker}"/>
+                                </StackPanel>
+
+                                <!-- Start Time -->
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Start Time *" Style="{StaticResource FieldLabel}"/>
+                                    <ComboBox x:Name="cmbStartTime" 
+                                              Style="{StaticResource ModernComboBox}"
+                                              ItemsSource="{Binding TimeSlots}"
+                                              ItemStringFormat="hh\:mm"
+                                              Foreground="Black">
+                                        <ComboBox.ItemContainerStyle>
+                                            <Style TargetType="ComboBoxItem">
+                                                <Setter Property="Foreground" Value="Black"/>
+                                            </Style>
+                                        </ComboBox.ItemContainerStyle>
+                                    </ComboBox>
+                                </StackPanel>
+
+                                <!-- End Time -->
+                                <StackPanel Grid.Column="4">
+                                    <TextBlock Text="End Time *" Style="{StaticResource FieldLabel}"/>
+                                    <ComboBox x:Name="cmbEndTime" 
+                                              Style="{StaticResource ModernComboBox}"
+                                              ItemsSource="{Binding TimeSlots}"
+                                              ItemStringFormat="hh\:mm"
+                                              Foreground="Black">
+                                        <ComboBox.ItemContainerStyle>
+                                            <Style TargetType="ComboBoxItem">
+                                                <Setter Property="Foreground" Value="Black"/>
+                                            </Style>
+                                        </ComboBox.ItemContainerStyle>
+                                    </ComboBox>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Duration Preview -->
+                            <Border Grid.Row="2"
+                                   Background="{StaticResource PrimaryPaleBrush}"
+                                   CornerRadius="10"
+                                   Padding="16,12"
+                                   Margin="0,16,0,0"
+                                   HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal">
+                                    <Icons:PackIconMaterial Kind="TimerOutline"
+                                                           Width="18" Height="18"
+                                                           Foreground="{StaticResource PrimaryBrush}"
+                                                           VerticalAlignment="Center"
+                                                           Margin="0,0,8,0"/>
+                                    <TextBlock x:Name="tbDuration"
+                                              Text="Duration: -- hrs"
+                                              FontSize="13"
+                                              FontWeight="SemiBold"
+                                              Foreground="{StaticResource PrimaryBrush}"
+                                              VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!-- SECTION 3: DETAILS -->
+                    <Border Grid.Row="2"
+                            Background="{StaticResource PageBackgroundBrush}"
+                            CornerRadius="16"
+                            Padding="20"
+                            Margin="0,0,0,18">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Section Header -->
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,14">
+                                <Border Background="{StaticResource SuccessLightBrush}"
+                                        CornerRadius="10"
+                                        Padding="7"
+                                        Margin="0,0,5,0">
+                                    <Icons:PackIconMaterial Kind="Details"
+                                                            Width="24" Height="24"
+                                                            Foreground="{StaticResource SuccessBrush}"/>
+                                </Border>
+                                <TextBlock Text="Additional Details"
+                                           Style="{StaticResource SectionTitle}"
+                                           VerticalAlignment="Center"
+                                           Margin="0"/>
+                            </StackPanel>
+
+                            <!-- Details Grid -->
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="16"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="16"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Trainer -->
+                                <StackPanel Grid.Column="0" Grid.Row="0">
+                                    <TextBlock Text="Trainer (Optional)" Style="{StaticResource FieldLabel}"/>
+                                    <ComboBox x:Name="cmbTrainer"
+                                              ItemsSource="{Binding _trainers}"
+                                              Style="{StaticResource ModernComboBox}"
+                                              DisplayMemberPath="FullName"                                        
+                                              SelectedValue="{Binding TrainerID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              SelectedValuePath="TrainerID"/>
+                                </StackPanel>
+
+                                <!-- Location -->
+                                <StackPanel Grid.Column="2" Grid.Row="0">
+                                    <TextBlock Text="Location" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox x:Name="txtLocation"
+                                             Text="{Binding Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             Style="{StaticResource ModernTextBox}"
+                                             Tag="e.g., Room 101, Online (Zoom)"/>
+                                </StackPanel>
+
+                                <!-- Status -->
+                                <StackPanel Grid.Column="0" Grid.Row="2">
+                                    <TextBlock Text="Status *" Style="{StaticResource FieldLabel}"/>
+                                    <ComboBox x:Name="cmbStatus"
+                                               SelectedValue="{Binding StatusEnum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                               Style="{StaticResource ModernComboBox}"/>
+                                </StackPanel>
+
+                                <!-- Active Checkbox -->
+                                <StackPanel Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom">
+                                    <CheckBox x:Name="chkIsActive"
+                                              IsChecked="{Binding IsActive, Mode=TwoWay}"
+                                              Style="{StaticResource ModernCheckBox}"
+                                              Content="Active Session"
+                                              Margin="0,0,0,8"/>
+                                </StackPanel>
+
+                                <!-- Notes -->
+                                <StackPanel Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3">
+                                    <TextBlock Text="Notes (Optional)" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox x:Name="txtNotes"
+                                             Style="{StaticResource MultiLineTextBox}"
+                                             MinHeight="100"
+                                             Text="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             Tag="Add any additional notes or instructions for this session..."/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <!-- SECTION 4: QUICK INFO CARDS -->
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Card 1: Selected Group -->
+                        <Border Grid.Column="0"
+                                Background="White"
+                                BorderBrush="{StaticResource BorderBrush}"
+                                BorderThickness="2"
+                                CornerRadius="12"
+                                Padding="20,16">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0 0 0 8">
+                                    <Icons:PackIconMaterial Kind="AccountGroup"
+                                                           Width="16" Height="16"
+                                                           Foreground="{StaticResource PrimaryBrush}"
+                                                           VerticalAlignment="Center"
+                                                           Margin="0,0,6,0"/>
+                                    <TextBlock Text="GROUP"
+                                              FontSize="10"
+                                              FontWeight="Bold"
+                                              Foreground="{StaticResource TextTertiaryBrush}"/>
+                                </StackPanel>
+
+                                <TextBlock x:Name="tbSelectedGroup"
+                                          Text="Not selected"
+                                          FontSize="13"
+                                          FontWeight="SemiBold"
+                                          Foreground="{StaticResource TextPrimaryBrush}"
+                                          TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Card 2: Date -->
+                        <Border Grid.Column="2"
+                                Background="White"
+                                BorderBrush="{StaticResource BorderBrush}"
+                                BorderThickness="2"
+                                CornerRadius="12"
+                                Padding="20,16">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0 0 0 8">
+                                    <Icons:PackIconMaterial Kind="CalendarToday"
+                                                           Width="16" Height="16"
+                                                           Foreground="{StaticResource InfoBrush}"
+                                                           VerticalAlignment="Center"
+                                                           Margin="0,0,6,0"/>
+
+                                    <TextBlock Text="DATE"
+                                              FontSize="10"
+                                              FontWeight="Bold"
+                                              Foreground="{StaticResource TextTertiaryBrush}"/>
+                                </StackPanel>
+
+                                <TextBlock x:Name="tbSelectedDate"
+                                          Text="Today"
+                                          FontSize="13"
+                                          FontWeight="SemiBold"
+                                          Foreground="{StaticResource TextPrimaryBrush}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Card 3: Time -->
+                        <Border Grid.Column="4"
+                                Background="White"
+                                BorderBrush="{StaticResource BorderBrush}"
+                                BorderThickness="2"
+                                CornerRadius="12"
+                                Padding="20,16">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <Icons:PackIconMaterial Kind="ClockTimeThree"
+                                                           Width="16" Height="16"
+                                                           Foreground="{StaticResource SuccessBrush}"
+                                                           VerticalAlignment="Center"
+                                                           Margin="0,0,6,0"/>
+                                    <TextBlock Text="TIME"
+                                              FontSize="10"
+                                              FontWeight="Bold"
+                                              Foreground="{StaticResource TextTertiaryBrush}"/>
+                                </StackPanel>
+                                <TextBlock x:Name="tbSelectedTime"
+                                          Text="--:-- - --:--"
+                                          FontSize="13"
+                                          FontWeight="SemiBold"
+                                          Foreground="{StaticResource TextPrimaryBrush}"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+
+            <!-- FOOTER -->
+            <Border Grid.Row="2"
+                    Background="{StaticResource PageBackgroundBrush}"
+                    BorderBrush="{StaticResource BorderLightBrush}"
+                    BorderThickness="0,1,0,0"
+                    Padding="20,10"
+                    CornerRadius="0,0,22,22">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Validation Message -->
+                    <StackPanel Grid.Column="0" 
+                               Orientation="Horizontal"
+                               x:Name="validationPanel"
+                               Visibility="Collapsed">
+                        <Icons:PackIconMaterial Kind="AlertCircle"
+                                               Width="15" Height="15"
+                                               Foreground="{StaticResource DangerBrush}"
+                                               VerticalAlignment="Center"
+                                               Margin="0,0,8,0"/>
+                        <TextBlock x:Name="tbValidationMessage"
+                                  Text="Please fill in all required fields"
+                                  FontSize="11"
+                                  Foreground="{StaticResource DangerBrush}"
+                                  VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Action Buttons -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                        <Button Content="Cancel"
+                                Name="btnCancel"
+                                Style="{StaticResource SecondaryButton}"
+                                Click="btnCancel_Click"
+                                Padding="20,10"
+                                MinWidth="120"
+                                Margin="0,0,12,0"/>
+
+                        <Button x:Name="btnSave"
+                                Style="{StaticResource SuccessButton}"
+                                Click="btnSave_Click"
+                                Padding="20,10"
+                                MinWidth="160"
+                                FontSize="14"
+                                FontWeight="SemiBold">
+                            <StackPanel Orientation="Horizontal">
+                                <Icons:PackIconMaterial Kind="CalendarCheck"
+                                                       Width="20" Height="20"
+                                                       Margin="0,0,10,0"/>
+                                <TextBlock Text="Create Session"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

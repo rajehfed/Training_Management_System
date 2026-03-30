@@ -1,0 +1,532 @@
+﻿<Window x:Class="TrainningCenter.Views.Windows.Centers.AddEditCenterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TrainningCenter.Views.Windows.Centers"
+        xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        mc:Ignorable="d"
+        Title="Add Training Center"
+        Height="700"
+        Width="1000"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True">
+    
+    <Window.Resources>
+        <Style x:Key="ErrorText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource DangerBrush}"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Margin" Value="0,4,0,0"/>
+            <Setter Property="Visibility" Value="Collapsed"/>
+        </Style>
+
+        <!-- Animated Card Style -->
+        <Style x:Key="FeatureCard" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,16,0"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#000000" BlurRadius="15" ShadowDepth="0" Opacity="0.06"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect Color="#8147E7" BlurRadius="20" ShadowDepth="0" Opacity="0.2"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
+    <Border CornerRadius="24">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#8147E7" Offset="0"/>
+                <GradientStop Color="#A980F5" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <Grid Margin="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="380"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--LEFT PANEL - PREVIEW-->
+            <Border Grid.Column="0"
+                    Background="{StaticResource PageBackgroundBrush}"
+                    CornerRadius="21 0 0 21"
+                    Padding="32 40">
+                <StackPanel>
+                    <!--ICON & TITLE-->
+                    <Border Width="100" Height="100"
+                            CornerRadius="50"
+                            HorizontalAlignment="Center"
+                            Margin="0 0 0 24">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#8147E7" Offset="0"/>
+                                <GradientStop Color="#A980F5" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        
+                        <Icons:PackIconMaterial x:Name="iconPreview"
+                                                VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                Kind="OfficeBuilding"
+                                                Width="50"
+                                                Height="50"
+                                                Foreground="White"/>
+                    </Border>
+
+                    <TextBlock x:Name="tbPreviewTitle"
+                               Text="{Binding CenterName, UpdateSourceTrigger=PropertyChanged, TargetNullValue='New Training Center', FallbackValue='New Training Center'}"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               TextAlignment="Center"
+                               Margin="0,0,0,8"/>
+                    <TextBlock x:Name="tbPreviewSubtitle"
+                               Text="Preview will appear here"
+                               FontSize="13"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,32"/>
+
+                    <!--LIVE PREVIEW CARD-->
+                    <Border Style="{StaticResource FeatureCard}" Margin="0">
+                        <StackPanel>
+                            <TextBlock Text="LOCATION"
+                                       FontSize="10"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource PrimaryBrush}"
+                                       Margin="0 0 0 12"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0 0 0 8">
+                                <Icons:PackIconMaterial Kind="MapMarker"
+                                                        Width="16" Height="16"
+                                                        Foreground="{StaticResource TextSecondaryBrush}"
+                                                        VerticalAlignment="Center"
+                                                        Margin="0,0,8,0"/>
+                                <TextBlock x:Name="tbPreviewCity"
+                                           Text="{Binding City, UpdateSourceTrigger=PropertyChanged, TargetNullValue='City', FallbackValue='City'}"
+                                           FontSize="13"
+                                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                            </StackPanel>
+
+                            <TextBlock x:Name="tbPreviewAddress"
+                                       Text="{Binding Address, UpdateSourceTrigger=PropertyChanged, TargetNullValue='Address', FallbackValue='Address'}"
+                                       FontSize="12"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       TextWrapping="Wrap"
+                                       Margin="0,0,0,16"/>
+                            
+                            <Separator Background="{StaticResource BorderBrush}" Margin="0,0,0,16"/>
+
+                            <TextBlock Text="CAPACITY"
+                                       FontSize="10"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource PrimaryBrush}"
+                                       Margin="0,0,0,8"/>
+                            
+                            <StackPanel Orientation="Horizontal">
+                                <Icons:PackIconMaterial Kind="AccountGroup"
+                                                        Width="24" Height="24"
+                                                        Foreground="{StaticResource PrimaryBrush}"
+                                                        VerticalAlignment="Center"
+                                                        Margin="0,0,8,0"/>
+                                <TextBlock x:Name="tbPreviewCapacity"
+                                           Text="{Binding Capacity, UpdateSourceTrigger=PropertyChanged, StringFormat='{}Capacity: {0}'}"
+                                           FontSize="28"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource TextPrimaryBrush}"
+                                           VerticalAlignment="Center"/>
+                                <TextBlock Text="students"
+                                           FontSize="14"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           VerticalAlignment="Center"
+                                           Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!--STATUS INDICATOR-->
+                    <Border Margin="0,24,0,0"
+                            CornerRadius="12"
+                            Padding="16,12">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=chkIsActive, Path=IsChecked}" Value="True">
+                                        <Setter Property="Background" Value="{StaticResource SuccessLightBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=chkIsActive, Path=IsChecked}" Value="False">
+                                        <Setter Property="Background" Value="{StaticResource DangerLightBrush}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Ellipse Width="8" Height="8" VerticalAlignment="Center" Margin="0,0,8,0">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=chkIsActive, Path=IsChecked}" Value="True">
+                                                <Setter Property="Fill" Value="{StaticResource SuccessBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=chkIsActive, Path=IsChecked}" Value="False">
+                                                <Setter Property="Fill" Value="{StaticResource DangerBrush}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+                            <TextBlock x:Name="tbPreviewStatus"
+                                       Text="Active Center"
+                                       FontSize="13"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=chkIsActive, Path=IsChecked}" Value="True">
+                                                <Setter Property="Foreground" Value="{StaticResource SuccessBrush}"/>
+                                                <Setter Property="Text" Value="Active Center"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=chkIsActive, Path=IsChecked}" Value="False">
+                                                <Setter Property="Foreground" Value="{StaticResource DangerBrush}"/>
+                                                <Setter Property="Text" Value="Inactive Center"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!--RIGHT PANEL - FORM-->
+            <Border Grid.Column="1"
+                    MouseLeftButtonDown="Border_MouseLeftButtonDown"
+                    Background="White"
+                    CornerRadius="0 21 21 0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!--HEADER-->
+                    <Border Grid.Row="0"
+                            Background="{StaticResource PageBackgroundBrush}"
+                            Padding="32,24"
+                            CornerRadius="0 21 0 0">
+                        <Grid>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock x:Name="tbTitle"
+                                           Text="Add Training Center"
+                                           FontSize="24"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                                <TextBlock x:Name="tbSubtitle"
+                                           Text="Fill in the center information below"
+                                           FontSize="13"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="0,4,0,0"/>
+                            </StackPanel>
+
+                            <Button x:Name="btnCloseWindow"
+                                    HorizontalAlignment="Right"
+                                    Style="{StaticResource CloseButton}"
+                                    Click="btnCloseWindow_Click">
+                                <Icons:PackIconMaterial Kind="Close"
+                                                        Width="18" Height="18"
+                                                        Foreground="{StaticResource TextSecondaryBrush}"/>
+                            </Button>
+                        </Grid>
+                    </Border>
+
+                    <!--FORM CONTENT-->
+                    <ScrollViewer Grid.Row="1"
+                                  VerticalScrollBarVisibility="Auto"
+                                  Padding="32,24">
+                        <StackPanel>
+                            <!--BASIC INFORMATION-->
+                            <TextBlock Text="Basic Information"
+                                       Style="{StaticResource SectionHeader}"/>
+                            
+                            <!--CENTER NAME-->
+                            <StackPanel Margin="0 0 0 16">
+                                <TextBlock Text="Center Name *"
+                                           Style="{StaticResource FormLabel}"/>
+                                <Grid>
+                                    <TextBox x:Name="txtCenterName"
+                                             Style="{StaticResource ModernTextBox}"
+                                             Text="{Binding CenterName}"
+                                             Padding="44,13,16,13"
+                                             Tag="e.g., Main Campus"/>
+                                    <Icons:PackIconMaterial Kind="OfficeBuilding"
+                                                            Width="18" Height="18"
+                                                            Foreground="{StaticResource TextSecondaryBrush}"
+                                                            VerticalAlignment="Center"
+                                                            Margin="16,0,0,0"
+                                                            IsHitTestVisible="False"/>
+                                </Grid>
+
+                                <TextBlock x:Name="errorCenterName"
+                                           Text="Center name is required"
+                                           Style="{StaticResource ErrorText}"/>
+                            </StackPanel>
+
+                            <Grid Margin="0 0 0 16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--CITY-->
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="City *"
+                                               Style="{StaticResource FormLabel}"/>
+
+                                    <Grid>
+                                        <TextBox x:Name="txtCenterCity"
+                                                 Style="{StaticResource ModernTextBox}"
+                                                 Padding="44, 13, 16, 13"
+                                                 Tag="e.g., New York"
+                                                 Text="{Binding City}"/>
+                                        <Icons:PackIconMaterial Kind="MapMarker"
+                                                                Width="18" Height="18"
+                                                                Foreground="{StaticResource TextSecondaryBrush}"
+                                                                VerticalAlignment="Center"
+                                                                Margin="16,0,0,0"
+                                                                IsHitTestVisible="False"/>
+                                    </Grid>
+
+                                    <TextBlock x:Name="errorCity"
+                                               Text="City is required"
+                                               Style="{StaticResource ErrorText}"/>
+                                </StackPanel>
+
+                                <!--CAPACITY-->
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Capacity *"
+                                               Style="{StaticResource FormLabel}"/>
+
+                                    <Grid>
+                                        <TextBox x:Name="txtCapacity"
+                                                 Style="{StaticResource ModernTextBox}"
+                                                 Padding="44,13,16,13"
+                                                 Text="{Binding Capacity}"
+                                                 Tag="e.g., 50"/>
+                                        <Icons:PackIconMaterial Kind="AccountGroup"
+                                                                Width="18" Height="18"
+                                                                Foreground="{StaticResource TextSecondaryBrush}"
+                                                                VerticalAlignment="Center"
+                                                                Margin="16,0,0,0"
+                                                                IsHitTestVisible="False"/>
+                                    </Grid>
+                                    <TextBlock x:Name="errorCapacity"
+                                               Text="Valid capacity required"
+                                               Style="{StaticResource ErrorText}"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!--ADDRESS-->
+                            <StackPanel Margin="0 0 0 16">
+                                <TextBlock Text="Address *" 
+                                           Style="{StaticResource FormLabel}"/>
+                                <TextBox x:Name="txtAddress"
+                                         Style="{StaticResource ModernTextBox}"
+                                         Tag="Street address"
+                                         Text="{Binding Address}"/>
+                                <TextBlock x:Name="errorAddress"
+                                           Text="Address is required"
+                                           Style="{StaticResource ErrorText}"/>
+                            </StackPanel>
+
+                            <!--CONTACT INFORMATION-->
+                            <TextBlock Text="Contact Information"
+                                       Style="{StaticResource SectionHeader}"
+                                       Margin="0,16,0,10"/>
+
+                            <Grid Margin="0 0 0 16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--PHONE-->
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Phone Number"
+                                               Style="{StaticResource FormLabel}"/>
+                                    <Grid>
+                                        <TextBox x:Name="txtPhone"
+                                                 Text="{Binding Phone}"
+                                                 Style="{StaticResource ModernTextBox}"
+                                                 Padding="44,13,16,13"
+                                                 Tag="(555) 123-4567"/>
+                                        <Icons:PackIconMaterial Kind="Phone"
+                                                                Width="18" Height="18"
+                                                                Foreground="{StaticResource TextSecondaryBrush}"
+                                                                VerticalAlignment="Center"
+                                                                Margin="16,0,0,0"
+                                                                IsHitTestVisible="False"/>
+                                    </Grid>
+                                </StackPanel>
+
+                                <!--EMAIL-->
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Email Address *"
+                                               Style="{StaticResource FormLabel}"/>
+
+                                    <Grid>
+                                        <TextBox x:Name="txtEmail"
+                                                 Style="{StaticResource ModernTextBox}"
+                                                 Padding="44,13,16,13"
+                                                 Text="{Binding Email}"
+                                                 Tag="center@example.com"/>
+                                        <Icons:PackIconMaterial Kind="Email"
+                                                                Width="18" Height="18"
+                                                                Foreground="{StaticResource TextSecondaryBrush}"
+                                                                VerticalAlignment="Center"
+                                                                Margin="16,0,0,0"
+                                                                IsHitTestVisible="False"/>
+                                    </Grid>
+
+                                    <TextBlock x:Name="errorEmail"
+                                               Text="Valid email is required"
+                                               Style="{StaticResource ErrorText}"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!--MANAGER-->
+                            <StackPanel Margin="0,0,0,16">
+                                <TextBlock Text="Manager / Director"
+                                           Style="{StaticResource FormLabel}"/>
+                                <Grid>
+                                    <TextBox x:Name="txtManager"
+                                             Style="{StaticResource ModernTextBox}"
+                                             Padding="44,13,16,13"
+                                             Text="{Binding Manager}"
+                                             Tag="Manager name"/>
+                                    <Icons:PackIconMaterial Kind="AccountTie"
+                                                            Width="18" Height="18"
+                                                            Foreground="{StaticResource TextSecondaryBrush}"
+                                                            VerticalAlignment="Center"
+                                                            Margin="16,0,0,0"
+                                                            IsHitTestVisible="False"/>
+                                </Grid>
+                            </StackPanel>
+
+                            <!--FACILITIES-->
+                            <StackPanel Margin="0,0,0,16">
+                                <TextBlock Text="Facilities/Equipment"
+                                           Style="{StaticResource FormLabel}"/>
+                                <TextBox x:Name="txtFacilities"
+                                         Text="{Binding Facilities}"
+                                         Style="{StaticResource MultiLineTextBox}"
+                                         Height="80"
+                                         TextWrapping="Wrap"
+                                         AcceptsReturn="True"
+                                         VerticalScrollBarVisibility="Auto"
+                                         Tag="List available facilities (computers, projectors, etc.)"/>
+                            </StackPanel>
+
+                            <!--ACTIVE STATUS-->
+                            <CheckBox x:Name="chkIsActive"
+                                      Content="Center is currently active"
+                                      Style="{StaticResource ModernCheckBox}"
+                                      IsChecked="{Binding IsActive}"
+                                      Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <!--FOOTER-->
+                    <Border Grid.Row="2"
+                            Background="{StaticResource PageBackgroundBrush}"
+                            BorderBrush="{StaticResource BorderLightBrush}"
+                            BorderThickness="0,1,0,0"
+                            Padding="32,20"
+                            CornerRadius="0,0,21,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!--DELETE BUTTON-->
+                            <Button x:Name="btnDelete"
+                                    Grid.Column="0"
+                                    Style="{StaticResource DangerButton}"
+                                    Content="Delete Center"
+                                    HorizontalAlignment="Left"
+                                    Visibility="Collapsed"
+                                    Click="btnDelete_Click"
+                                    Padding="20,12">
+                                <Button.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Icons:PackIconMaterial Kind="Delete"
+                                                                    Width="16" Height="16"
+                                                                    VerticalAlignment="Center"
+                                                                    Margin="0,0,8,0"/>
+                                            <TextBlock Text="Delete Center"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </Button.ContentTemplate>
+                            </Button>
+
+                            <!--ACTION BUTTONS-->
+                            <StackPanel Orientation="Horizontal"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Right">
+                                <Button Content="Cancel"
+                                        Name="btnCancel"
+                                        Style="{StaticResource SecondaryButton}"
+                                        Click="btnCancel_Click"
+                                        Padding="24,12"
+                                        MinWidth="120"
+                                        Margin="0,0,12,0"/>
+
+                                <Button x:Name="btnSave"
+                                        Content="Save Content"
+                                        Style="{StaticResource PrimaryButton}"
+                                        Click="btnSave_Click"
+                                        Padding="24,12"
+                                        MinWidth="140">
+                                    <Button.ContentTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Icons:PackIconMaterial Kind="ContentSave"
+                                                                        Width="16" Height="16"
+                                                                        VerticalAlignment="Center"
+                                                                        Margin="0,0,8,0"/>
+                                                <TextBlock Text="Save Center"
+                                                           VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </Button.ContentTemplate>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

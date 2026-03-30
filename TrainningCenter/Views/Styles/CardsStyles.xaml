@@ -1,0 +1,307 @@
+﻿<!--
+═══════════════════════════════════════════════════════════════════════════════
+    CARDS & CONTAINERS STYLES - Training Center Application
+    
+    This resource dictionary contains all card, border, and container styles
+    for consistent layout design throughout the application.
+    
+    CATEGORIES:
+    - Card Styles (White backgrounds with shadows)
+    - Gradient Cards (With color backgrounds)
+    - Stat Cards (Dashboard metrics)
+    - Badge Styles (Status indicators)
+    
+    Author: Training Center Team "Fedili Rajeh"
+    Version: 1.0
+═══════════════════════════════════════════════════════════════════════════════
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        STANDARD CARD STYLE
+        
+        Usage: Main content containers, sections, panels
+        Features: White background, subtle shadow, rounded corners
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="CardStyle" TargetType="Border">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="CornerRadius" Value="16"/>
+        <Setter Property="Padding" Value="24"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="#000000" 
+                                BlurRadius="20" 
+                                ShadowDepth="0" 
+                                Opacity="0.08"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        COMPACT CARD STYLE
+        
+        Usage: Smaller cards, nested containers
+        Features: Less padding, smaller corner radius
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="CompactCard" TargetType="Border">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="16"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="#000000" 
+                                BlurRadius="15" 
+                                ShadowDepth="0" 
+                                Opacity="0.06"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        STAT CARD STYLE
+        
+        Usage: Dashboard statistics, metric displays
+        Features: Minimal shadow, perfect for dashboard grids
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="StatCard" TargetType="Border">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="CornerRadius" Value="14"/>
+        <Setter Property="Padding" Value="20"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="#000000" 
+                                BlurRadius="15" 
+                                ShadowDepth="0" 
+                                Opacity="0.06"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        GRADIENT CARD STYLE (Purple)
+        
+        Usage: Featured content, specialization cards, highlighted sections
+        Features: Purple gradient background, glow effect
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="GradientCard" TargetType="Border">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#8147E7" Offset="0"/>
+                    <GradientStop Color="#A980F5" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="CornerRadius" Value="16"/>
+        <Setter Property="Padding" Value="24"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="#8147E7" 
+                                BlurRadius="20" 
+                                ShadowDepth="0" 
+                                Opacity="0.3"/>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect Color="#8147E7" 
+                                        BlurRadius="30" 
+                                        ShadowDepth="0" 
+                                        Opacity="0.5"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <TranslateTransform Y="-4"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        HOVER CARD STYLE
+        
+        Usage: Interactive cards, clickable items
+        Features: Lift animation on hover
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="HoverCard" TargetType="Border" BasedOn="{StaticResource CardStyle}">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect Color="#000000" 
+                                        BlurRadius="25" 
+                                        ShadowDepth="0" 
+                                        Opacity="0.12"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <TranslateTransform Y="-2"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        INFO PANEL STYLE
+        
+        Usage: Info boxes, help text, notifications
+        Features: Light purple background, no shadow
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="InfoPanel" TargetType="Border">
+        <Setter Property="Background" Value="#F0EDFF"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="Padding" Value="16"/>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        BADGE STYLES - Status Indicators
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <!-- Active Badge (Green) -->
+    <Style x:Key="ActiveBadge" TargetType="Border">
+        <Setter Property="Background" Value="#E7F6EC"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="10,5"/>
+    </Style>
+    <!-- Inactive Badge (Red) -->
+    <Style x:Key="InactiveBadge" TargetType="Border">
+        <Setter Property="Background" Value="#FFE5E5"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="10,5"/>
+    </Style>
+    <!-- Warning Badge (Orange) -->
+    <Style x:Key="WarningBadge" TargetType="Border">
+        <Setter Property="Background" Value="#FFF3E0"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="10,5"/>
+    </Style>
+    <!-- Primary Badge (Purple) -->
+    <Style x:Key="PrimaryBadge" TargetType="Border">
+        <Setter Property="Background" Value="#F0EDFF"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="10,5"/>
+    </Style>
+    <!-- Info Badge (Blue) -->
+    <Style x:Key="InfoBadge" TargetType="Border">
+        <Setter Property="Background" Value="#E3F2FD"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="10,5"/>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        MODAL/DIALOG CARD STYLE
+        
+        Usage: Modal windows, dialog boxes
+        Features: Larger shadow for floating effect, rounded corners
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="ModalCard" TargetType="Border">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+        <Setter Property="CornerRadius" Value="16"/>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        SEPARATOR STYLES
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <!-- Horizontal Separator -->
+    <Style x:Key="HorizontalSeparator" TargetType="Separator">
+        <Setter Property="Background" Value="#E8E8E8"/>
+        <Setter Property="Height" Value="1"/>
+        <Setter Property="Margin" Value="0,20,0,20"/>
+    </Style>
+    <!-- Vertical Separator -->
+    <Style x:Key="VerticalSeparator" TargetType="Separator">
+        <Setter Property="Background" Value="#E8E8E8"/>
+        <Setter Property="Width" Value="1"/>
+        <Setter Property="Margin" Value="20,0,20,0"/>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        ICON CONTAINER STYLES
+        
+        Usage: Icon backgrounds in cards, buttons
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <!-- Purple Icon Container -->
+    <Style x:Key="PurpleIconContainer" TargetType="Border">
+        <Setter Property="Background" Value="#F0EDFF"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="12"/>
+        <Setter Property="Width" Value="48"/>
+        <Setter Property="Height" Value="48"/>
+    </Style>
+    <!-- Green Icon Container -->
+    <Style x:Key="GreenIconContainer" TargetType="Border">
+        <Setter Property="Background" Value="#E7F6EC"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="12"/>
+        <Setter Property="Width" Value="48"/>
+        <Setter Property="Height" Value="48"/>
+    </Style>
+    <!-- Orange Icon Container -->
+    <Style x:Key="OrangeIconContainer" TargetType="Border">
+        <Setter Property="Background" Value="#FFF3E0"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="12"/>
+        <Setter Property="Width" Value="48"/>
+        <Setter Property="Height" Value="48"/>
+    </Style>
+    <!-- Blue Icon Container -->
+    <Style x:Key="BlueIconContainer" TargetType="Border">
+        <Setter Property="Background" Value="#E3F2FD"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="12"/>
+        <Setter Property="Width" Value="48"/>
+        <Setter Property="Height" Value="48"/>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        ELEVATED CARD STYLE
+        
+        Usage: Hero sections, featured items
+        Features: Higher elevation (more shadow), stronger presence
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="ElevatedCard" TargetType="Border">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="CornerRadius" Value="20"/>
+        <Setter Property="Padding" Value="28"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="#000000" 
+                                BlurRadius="35" 
+                                ShadowDepth="0" 
+                                Opacity="0.15"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

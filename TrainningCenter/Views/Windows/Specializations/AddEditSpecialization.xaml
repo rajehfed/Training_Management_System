@@ -1,0 +1,359 @@
+﻿ <Window x:Class="TrainningCenter.Views.Windows.AddEditSpecialization"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TrainningCenter.Views.Windows"
+        xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:uc="clr-namespace:TrainningCenter.UserControles"
+        Title="Specialization Management" 
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Height="650" Width="480">
+    
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        MAIN WINDOW STRUCTURE
+        
+        Layout:
+        1. Header (Title + Close button)
+        2. Form Fields (Name, Description, Icon, Status)
+        3. Footer (Cancel + Save buttons)
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Border Style="{StaticResource ModalCard}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!--
+            ───────────────────────────────────────────────────────────────────
+                HEADER SECTION
+                Features: Gradient background, draggable, close button
+            ───────────────────────────────────────────────────────────────────
+            -->
+            <Border Grid.Row="0"
+                    Background="{StaticResource PrimaryBrush}"
+                    CornerRadius="15 15 0 0"
+                    Padding="14, 10"
+                    MouseDown="Header_MouseDown">
+                <Grid>
+                    <StackPanel>
+                        <!--DYNAMIC TITLE (changes based on Add/Edit mode)-->
+                        <TextBlock x:Name="tbModalTitle"
+                                   Text="Add New Specialization"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Foreground="White"/>
+                        <TextBlock Text="Fill in the specialization details"
+                                   FontSize="10"
+                                   Foreground="{StaticResource PrimaryUltraLightBrush}"/>
+                    </StackPanel>
+                    
+                    <!--CLOSE BUTTON-->
+                    <Button HorizontalAlignment="Right"
+                            Style="{StaticResource CloseButton}"
+                            x:Name="btnClose"
+                            Click="btnClose_Click">
+                        <Icons:PackIconMaterial Kind="Close" 
+                                              Width="15" 
+                                              Height="15" 
+                                              Foreground="White"/>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!--
+            ───────────────────────────────────────────────────────────────────
+                FORM CONTENT SECTION
+                Contains all input fields with proper labeling
+            ───────────────────────────────────────────────────────────────────
+            -->
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto"
+                          Padding="30, 18, 30, 10">
+                <StackPanel>
+                    <!--
+                        SPECIALIZATION NAME FIELD
+                        Required field for the specialization title
+                    -->
+                    <StackPanel Margin="0 0 0 24">
+                        <TextBlock Text="Specialization Name"
+                                   FontWeight="SemiBold"
+                                   FontSize="13"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   Margin="0 0 0 10"/>
+                        <Grid>
+                            <TextBox x:Name="txtName"
+                                     Padding="35 10 10 10"
+                                     Text="{Binding SpecializationName}"
+                                     Style="{StaticResource TextBoxWithIcon}" />
+                            <Icons:PackIconMaterial Kind="School" 
+                                                  Width="20" 
+                                                  Height="20"
+                                                  Foreground="#999999"
+                                                  Margin="12,0,12,0"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left"
+                                                  IsHitTestVisible="False"/>
+                        </Grid>
+                        <TextBlock Text="E.g., Web Development, Mobile Programming, Data Science" 
+                                   FontSize="11" 
+                                   Foreground="#999999" 
+                                   Margin="4,6,0,0"/>
+                    </StackPanel>
+
+                    <!--
+                        DESCRIPTION FIELD
+                        Multi-line text area for detailed description
+                    -->
+                    <StackPanel Margin="0 0 0 24">
+                        <TextBlock Text="Description"
+                                   FontWeight="SemiBold"
+                                   FontSize="13"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   Margin="0 0 0 10"/>
+                        <TextBox x:Name="txtDescription"
+                                 Text="{Binding Description}"
+                                 Style="{StaticResource MultiLineTextBox}"/>
+                        <TextBlock Text="Provide a clear overview of what this specialization covers" 
+                                   FontSize="11" 
+                                   Foreground="#999999" 
+                                   Margin="4,6,0,0"/>
+                    </StackPanel>
+
+                    <!--
+                        CATEGORY FIELD
+                        Required field for the specialization Category
+                    -->
+                    <StackPanel Margin="0 0 0 24">
+                        <TextBlock Text="Specialization Category"
+                                   FontWeight="SemiBold"
+                                   FontSize="13"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   Margin="0 0 0 10"/>
+                        <Grid>
+                            <TextBox x:Name="txtCategory"
+                                     Padding="35 10 10 10"
+                                     Text="{Binding Category}"
+                                     Style="{StaticResource TextBoxWithIcon}" />
+                            <Icons:PackIconMaterial Kind="Shape" 
+                                                     Width="20" 
+                                                     Height="20"
+                                                     Foreground="#999999"
+                                                     Margin="12,0,12,0"
+                                                     VerticalAlignment="Center"
+                                                     HorizontalAlignment="Left"
+                                                     IsHitTestVisible="False"/>
+                        </Grid>
+                        <TextBlock Text="E.g., IT, Programming, Mechanic, Electricity" 
+                                   FontSize="11" 
+                                   Foreground="#999999" 
+                                   Margin="4,6,0,0"/>
+                    </StackPanel>
+
+                    <!--
+                        Level FIELD
+                        Required field for the specialization Level
+                    -->
+                    <uc:DificultyLevelSlider x:Name="difficultySelector"
+                                             Margin="0 0 0 24"
+                                             DifficultyChanged="difficultySelector_DifficultyChanged"/>
+
+                    <!--
+                        Price FIELD, Prerequisites FIELD
+                        Required field for the specialization Price, Prerequisites
+                    -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Margin="0 0 0 24" Grid.Column="0">
+                            <TextBlock Text="Price"
+                                       FontWeight="SemiBold"
+                                       FontSize="13"
+                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       Margin="0 0 0 10"/>
+                            <Grid>
+                                <TextBox x:Name="txtPrice"
+                                         Padding="35 10 10 10"
+                                         Text="{Binding Price}"
+                                         Style="{StaticResource TextBoxWithIcon}"
+                                         PreviewTextInput="txtPrice_PreviewTextInput"
+                                         DataObject.Pasting="txtPrice_Pasting"/>
+                                <Icons:PackIconMaterial Kind="CashMultiple" 
+                                                         Width="20" 
+                                                         Height="20"
+                                                         Foreground="#999999"
+                                                         Margin="12,0,12,0"
+                                                         VerticalAlignment="Center"
+                                                         HorizontalAlignment="Left"
+                                                         IsHitTestVisible="False"/>
+                            </Grid>
+                            <TextBlock Text="Provide a Positive Valable number!! " 
+                                       FontSize="11" 
+                                       Foreground="#999999" 
+                                       Margin="4,6,0,0"/>
+                        </StackPanel>
+                        <StackPanel Margin="0 0 0 24" Grid.Column="2">
+                            <TextBlock Text="Duration"
+                                       FontWeight="SemiBold"
+                                       FontSize="13"
+                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       Margin="0 0 0 10"/>
+                            <Grid>
+                                <TextBox x:Name="txtDuration"
+                                         Padding="35 10 10 10"
+                                         Text="{Binding Duration}"
+                                         Style="{StaticResource TextBoxWithIcon}"
+                                         PreviewTextInput="txtDuration_PreviewTextInput"
+                                         DataObject.Pasting="txtDuration_Pasting"/>
+                                <Icons:PackIconMaterial Kind="BookClock" 
+                                                         Width="20" 
+                                                         Height="20"
+                                                         Foreground="#999999"
+                                                         Margin="12,0,12,0"
+                                                         VerticalAlignment="Center"
+                                                         HorizontalAlignment="Left"
+                                                         IsHitTestVisible="False"/>
+                            </Grid>
+                            <TextBlock Text="With Hours" 
+                                       FontSize="11" 
+                                       Foreground="#999999" 
+                                       Margin="4,6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Margin="0 0 0 24" Grid.Column="2">
+                        <TextBlock Text="Prerequisites"
+                                   FontWeight="SemiBold"
+                                   FontSize="13"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   Margin="0 0 0 10"/>
+                        <Grid>
+                            <TextBox x:Name="txtPrerequisites"
+                                     Padding="35 10 10 10"
+                                     Text="{Binding Prepequisites}"
+                                     Style="{StaticResource TextBoxWithIcon}" />
+                            <Icons:PackIconMaterial Kind="AsteriskCircleOutline" 
+                                 Width="20" 
+                                 Height="20"
+                                 Foreground="#999999"
+                                 Margin="12,0,12,0"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Left"
+                                 IsHitTestVisible="False"/>
+                        </Grid>
+                        <TextBlock Text="Like English Level, Phone, Laptob ...." 
+                                   FontSize="11" 
+                                   Foreground="#999999" 
+                                   Margin="4,6,0,0"/>
+                    </StackPanel>
+
+                    <!--
+                        ICON SELECTION (MVP: Single Default Icon)
+                        Future: Implement icon picker with multiple options
+                    -->
+                    <StackPanel Margin="0 0 0 24">
+                        <TextBlock Text="Display Icon"
+                                   FontWeight="SemiBold"
+                                   FontSize="13"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   Margin="0 0 0 10"/>
+                        
+                        <!--ICON PREVIEW CARD-->
+                        <Border Background="{StaticResource PrimaryPaleBrush}"
+                                CornerRadius="12"
+                                Padding="10"
+                                HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Background="White" 
+                                        CornerRadius="12"
+                                        Width="56" Height="56"
+                                        Margin="0, 0, 16, 0">
+                                    <Icons:PackIconMaterial Kind="School" 
+                                                          Width="28" 
+                                                          Height="28"
+                                                          Foreground="#8147E7"
+                                                          HorizontalAlignment="Center"
+                                                          VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="Default Icon" 
+                                              FontWeight="SemiBold" 
+                                              FontSize="14"
+                                              Foreground="#202020"
+                                              Margin="0,0,0,4"/>
+                                    <TextBlock Text="Icon customization coming soon" 
+                                              FontSize="12" 
+                                              Foreground="#999999"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <!--
+                        ACTIVE STATUS TOGGLE
+                        Determines if specialization is available
+                    -->
+                    <StackPanel Margin="0 8 0 0">
+                        <CheckBox x:Name="chkIsActive"
+                                  IsChecked="{Binding IsActive}"
+                                  Content="Active Specialization"
+                                  Style="{StaticResource ModernCheckBox}" />
+                        <TextBlock Text="Inactive specializations won't be available for new enrollments" 
+                                   FontSize="11" 
+                                   Foreground="#999999" 
+                                   Margin="36,1,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!--
+            ───────────────────────────────────────────────────────────────────
+                FOOTER SECTION
+                Contains action buttons (Cancel/Save)
+            ───────────────────────────────────────────────────────────────────
+            -->
+            <Border Grid.Row="2"
+                    Background="{StaticResource DisabledBackgroundBrush}"
+                    BorderBrush="{StaticResource SeparatorBrush}"
+                    CornerRadius="0 0 18 18"
+                    BorderThickness="0 1 0 0"
+                    Padding="22 12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!--CANCEL BUTTON-->
+                    <Button Grid.Column="0"
+                            Name="btnCancel"
+                            Content="Cancel"
+                            Style="{StaticResource SecondaryButton}"
+                            Margin="0 0 12 0"
+                            Click="btnCancel_Click"/>
+
+                    <!--SAVE BUTTON-->
+                    <Button Grid.Column="1"
+                            Name="btnSave"
+                            Content="Create Specialization"
+                            Style="{StaticResource PrimaryButton}"
+                            Margin="12 0 0 0"
+                            Click="btnSave_Click"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

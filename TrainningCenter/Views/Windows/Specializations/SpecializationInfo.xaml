@@ -1,0 +1,497 @@
+﻿<!--
+═══════════════════════════════════════════════════════════════════════════════
+    SPECIALIZATION DETAILS WINDOW
+    
+    A read-only detailed view of a specialization showing:
+    - Basic information (Name, Description, Status)
+    - Difficulty level
+    - Statistics (Students, Groups, Completion Rate)
+    - Enrolled students list
+    - Associated training groups
+    - Quick action buttons
+    
+    Size: 720x550
+    Design: Modern, card-based layout with purple theme
+    
+    Author: Training Center Team "Fedili Rajeh"
+    Version: 1.0
+═══════════════════════════════════════════════════════════════════════════════
+-->
+<Window x:Class="TrainningCenter.Views.Windows.SpecializationInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TrainningCenter.Views.Windows"
+        xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        mc:Ignorable="d"
+        Title="Specialization Info"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        Height="550" Width="720">
+    
+    <Border Style="{StaticResource ModalCard}"
+            BorderThickness="2">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--
+            ═══════════════════════════════════════════════════════════════════
+                HEADER SECTION
+                Purple gradient background with title and close button
+            ═══════════════════════════════════════════════════════════════════
+            -->
+            <Border Grid.Row="0"
+                    Background="{StaticResource PrimaryBrush}"
+                    CornerRadius="15,15,0,0"
+                    Padding="20,15"
+                    Name="Header"
+                    MouseDown="Header_MouseDown">
+                <Grid>
+                    <StackPanel Orientation="Horizontal">
+                        <Border Background="White"
+                                CornerRadius="12"
+                                Width="40"
+                                Height="40"
+                                Margin="0 0 16 0"
+                                Opacity="0.95">
+                            <Icons:PackIconMaterial Kind="School" 
+                                                    Width="20" 
+                                                    Height="20"
+                                                    Foreground="{StaticResource PrimaryBrush}"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"/>
+                        </Border>
+
+                        <!--TITLE INFO-->
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock x:Name="tbSpecializationName"
+                                       Text="{Binding SpecializationName}"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       Foreground="White"/>
+                            <TextBlock Text="Specializtion Details"
+                                       FontSize="12"
+                                       Foreground="{StaticResource PrimaryUltraLightBrush}"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!--CLOSE BUTTON-->
+                    <Button HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Width="38" Height="38"
+                            Cursor="Hand"
+                            Name="btnCose"
+                            Click="btnCose_Click"
+                            Style="{StaticResource CloseButton}">
+                        <Icons:PackIconMaterial Kind="Close" 
+                                              Width="20" 
+                                              Height="20" 
+                                              Foreground="White"/>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!--
+            ═══════════════════════════════════════════════════════════════════
+                CONTENT SECTION
+                Scrollable content with stats, info, and lists
+            ═══════════════════════════════════════════════════════════════════
+            -->
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto"
+                          Padding="20, 24">
+                <StackPanel>
+                    <!--
+                    ───────────────────────────────────────────────────────────
+                        STATISTICS ROW
+                        Quick metrics in colored boxes
+                    ───────────────────────────────────────────────────────────
+                    -->
+                    <Grid Margin="10 10 10 24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <!--TOTAL STUDENTS-->
+                        <Border Grid.Column="0"
+                                Style="{StaticResource CompactCard}"
+                                Margin="0 0 8 0">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0 0 0 8">
+                                    <Border Background="{StaticResource WarningLightBrush}"
+                                            CornerRadius="9"
+                                            Padding="9">
+                                        <Icons:PackIconMaterial Kind="AccountGroup" 
+                                                              Width="18" 
+                                                              Height="18"
+                                                              Foreground="#FF9800"/>
+                                    </Border>
+                                </StackPanel>
+
+                                <TextBlock x:Name="tbStudentCount"
+                                           Text="{Binding StudentCount}"
+                                           FontSize="24"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                                <TextBlock Text="Students"
+                                           FontSize="12"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="0 2 0 0"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <!--TRAINNING GROUPS-->
+                        <Border Grid.Column="1"
+                                Style="{StaticResource CompactCard}"
+                                Margin="0 0 8 0">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <Border Background="{StaticResource InfoLightBrush}" 
+                                           CornerRadius="8" 
+                                           Padding="8">
+                                        <Icons:PackIconMaterial Kind="GoogleClassroom" 
+                                                              Width="18" 
+                                                              Height="18"
+                                                              Foreground="{StaticResource InfoBrush}"/>
+                                    </Border>
+                                </StackPanel>
+                                <TextBlock x:Name="tbGroupCount"
+                                          Text="{Binding GroupCount}" 
+                                          FontSize="24" 
+                                          FontWeight="Bold" 
+                                          Foreground="{StaticResource TextPrimaryBrush}"/>
+                                <TextBlock Text="Groups" 
+                                          FontSize="12" 
+                                          Foreground="{StaticResource TextSecondaryBrush}" 
+                                          Margin="0,2,0,0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- COMPLETION RATE -->
+                        <Border Grid.Column="2" 
+                                Style="{StaticResource CompactCard}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <Border Background="{StaticResource SuccessLightBrush}" 
+                                           CornerRadius="8" 
+                                           Padding="8">
+                                        <Icons:PackIconMaterial Kind="ChartLine" 
+                                                              Width="18" 
+                                                              Height="18"
+                                                              Foreground="{StaticResource SuccessBrush}"/>
+                                    </Border>
+                                </StackPanel>
+                                <TextBlock x:Name="tbCompletionRate"
+                                          Text="{Binding CompletionRate}" 
+                                          FontSize="24" 
+                                          FontWeight="Bold" 
+                                          Foreground="{StaticResource TextPrimaryBrush}"/>
+                                <TextBlock Text="Completion" 
+                                          FontSize="12" 
+                                          Foreground="{StaticResource TextSecondaryBrush}" 
+                                          Margin="0,2,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!--
+                    ───────────────────────────────────────────────────────────
+                        BASIC INFORMATION
+                        Description, Status, Difficulty Level
+                    ───────────────────────────────────────────────────────────
+                    -->
+                    <Border Style="{StaticResource CardStyle}"
+                            Margin="10 10 10 20">
+                        <StackPanel>
+                            <!--SECTION TITLE-->
+                            <TextBlock Text="Information"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       Margin="0 0 0 16"/>
+                            
+                            <!--STATUS AND DIFFICULTY ROW-->
+                            <Grid Margin="0 0 0 16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <!--STATUS-->
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Status"
+                                               FontSize="12"
+                                               Foreground="{StaticResource TextSecondaryBrush}"
+                                               Margin="0 0 0 6"/>
+                                    <Border x:Name="StatusBadge"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource ActiveBadge}">
+                                        <TextBlock x:Name="tbStatus"
+                                                      Text="{Binding StatusText}" 
+                                                      FontWeight="SemiBold" 
+                                                      FontSize="13"
+                                                      Foreground="{Binding StatusForeground}"/>
+                                    </Border>
+                                </StackPanel>
+                                
+                                <!--DIFFICULTY LEVEL-->
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Difficulty"
+                                               FontSize="12"
+                                               Foreground="{StaticResource TextSecondaryBrush}"
+                                               Margin="0 0 0 6"/>
+                                    <Border x:Name="DifficultyBadge"
+                                            Background="{StaticResource SuccessLightBrush}"
+                                            Style="{StaticResource ActiveBadge}"
+                                            HorizontalAlignment="Left">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Icons:PackIconMaterial x:Name="difficultyIcon"
+                                                                  Kind="{Binding DifficultyIcon}" 
+                                                                  Width="14" 
+                                                                  Height="14"
+                                                                  Foreground="{StaticResource SuccessBrush}"
+                                                                  Margin="0,0,6,0"
+                                                                  VerticalAlignment="Center"/>
+                                            <TextBlock x:Name="tbDifficulty"
+                                                      Text="{Binding DifficultyText}" 
+                                                      FontWeight="SemiBold" 
+                                                      FontSize="13"
+                                                      Foreground="{Binding DifficultyForeground}"
+                                                      VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Description -->
+                            <StackPanel Margin="0,0,0,12">
+                                <TextBlock Text="Description" 
+                                          FontSize="12" 
+                                          Foreground="{StaticResource TextSecondaryBrush}"
+                                          Margin="0,0,0,8"/>
+                                <TextBlock x:Name="txtDescription"
+                                          Text="{Binding SpecializationDescription}"
+                                          FontSize="14"
+                                          Foreground="{StaticResource TextPrimaryBrush}"
+                                          TextWrapping="Wrap"
+                                          LineHeight="22"/>
+                            </StackPanel>
+
+                            <!-- Created Date -->
+                            <StackPanel Orientation="Horizontal">
+                                <Icons:PackIconMaterial Kind="CalendarClock" 
+                                                      Width="14" 
+                                                      Height="14"
+                                                      Foreground="{StaticResource TextTertiaryBrush}"
+                                                      Margin="0,0,6,0"
+                                                      VerticalAlignment="Center"/>
+                                <TextBlock FontSize="12" 
+                                          Foreground="{StaticResource TextTertiaryBrush}"
+                                          VerticalAlignment="Center">
+                                    <Run Text="Created on "/>
+                                    <Run x:Name="txtCreatedAt" 
+                                         Text="{Binding CreatedAt, Mode=OneWay}" 
+                                         FontWeight="SemiBold"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!--
+                    ───────────────────────────────────────────────────────────
+                        TRAINING GROUPS LIST
+                        Shows all groups for this specialization
+                    ───────────────────────────────────────────────────────────
+                    -->
+                    <Border Style="{StaticResource CardStyle}"
+                            Margin="10 10 10 20">
+                        <StackPanel>
+                            <!--SECTION HEADER-->
+                            <Grid Margin="0 0 0 16">
+                                <TextBlock Text="Training Groups"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource TextPrimaryBrush}"
+                                           VerticalAlignment="Center"/>
+
+                                <TextBlock VerticalAlignment="Center"
+                                           HorizontalAlignment="Right">
+                                    <Run x:Name="tbGroupsCount" 
+                                         Text="{Binding GroupCount}" 
+                                         FontWeight="Bold" 
+                                         Foreground="{StaticResource PrimaryBrush}"/>
+                                    <Run Text=" groups" 
+                                         Foreground="{StaticResource TextSecondaryBrush}" 
+                                         FontSize="13"/>
+                                </TextBlock>
+                            </Grid>
+                            
+                            <!--GROUPS LIST-->
+                            <ItemsControl x:Name="lstGroups">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="{StaticResource InputBackgroundBrush}"
+                                                CornerRadius="10"
+                                                Padding="14"
+                                                Margin="0 0 0 8"
+                                                Cursor="Hand">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{StaticResource PrimaryPaleBrush}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <!--GROUP ICON-->
+                                                <Border Grid.Column="0"
+                                                        Background="White"
+                                                        CornerRadius="8"
+                                                        Width="36"
+                                                        Height="36"
+                                                        Margin="0 0 12 0">
+                                                    <Icons:PackIconMaterial Kind="GoogleClassroom" 
+                                                                          Width="18" 
+                                                                          Height="18"
+                                                                          Foreground="#8147E7"
+                                                                          HorizontalAlignment="Center"
+                                                                          VerticalAlignment="Center"/>
+                                                </Border>
+                                                
+                                                <!--GROUP INFO-->
+                                                <StackPanel Grid.Column="1"
+                                                            VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding GroupName}"
+                                                               FontWeight="SemiBold"
+                                                               FontSize="14"
+                                                               Foreground="{StaticResource TextPrimaryBrush}"/>
+                                                    <TextBlock FontSize="12"
+                                                               Foreground="{StaticResource TextSecondaryBrush}"
+                                                               Margin="0,2,0,0">
+                                                        <Run Text="{Binding StudentCount}"/>
+                                                        <Run Text=" students • "/>
+                                                        <Run Text="{Binding TrainerName}"/>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                                
+                                                <!--STATUS BADGE-->
+                                                <Border Grid.Column="2"
+                                                        Background="{StaticResource  SuccessLightBrush}"
+                                                        CornerRadius="8"
+                                                        Padding="8,4"
+                                                        VerticalAlignment="Center">
+                                                    <TextBlock Text="Active"
+                                                               FontSize="11"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{StaticResource SuccessBrush}"/>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            
+                            <!--EMPTY STATE FOR GROUPS-->
+                            <Border x:Name="pnlNoGroups" 
+                                    Style="{StaticResource CardStyle}"
+                                    Background="{StaticResource InputBackgroundBrush}"
+                                    Padding="30"
+                                    Visibility="Visible">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <Icons:PackIconMaterial Kind="GoogleClassroom" 
+                                                          Width="40" 
+                                                          Height="40"
+                                                          Foreground="#CCCCCC"
+                                                          HorizontalAlignment="Center"
+                                                          Margin="0,0,0,12"/>
+                                    <TextBlock Text="No training groups yet"
+                                               FontSize="14"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource TextSecondaryBrush}"
+                                               TextAlignment="Center"/>
+                                    <TextBlock Text="Create a group to start training students"
+                                               FontSize="12"
+                                               Foreground="{StaticResource TextTertiaryBrush}"
+                                               TextAlignment="Center"
+                                               Margin="0 4 0 0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!--
+            ═══════════════════════════════════════════════════════════════════
+                FOOTER SECTION
+                Action buttons
+            ═══════════════════════════════════════════════════════════════════
+            -->
+            <Border Grid.Row="2"
+                    Background="{StaticResource DisabledBackgroundBrush}"
+                    CornerRadius="0 0 18 18"
+                    Padding="30 20"
+                    BorderBrush="{StaticResource SeparatorBrush}"
+                    BorderThickness="0 1 0 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!--VIEW STUDENT BUTTON-->
+                    <Button Grid.Column="0"
+                            Style="{StaticResource OutlineButton}"
+                            Margin="0 0 10 0"
+                            Name="btnViewStudents"
+                            Click="btnViewStudents_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Icons:PackIconMaterial Kind="AccountGroup" 
+                                                    Width="16" Height="16"
+                                                    Margin="0 0 8 0"/>
+                            <TextBlock Text="View Students"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    
+                    <!--EDIT BUTTON-->
+                    <Button Grid.Column="2"
+                            Style="{StaticResource PrimaryButton}"
+                            Name="btnEditSpecialization"
+                            Click="btnEditSpecialization_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Icons:PackIconMaterial Kind="Pencil" 
+                                                  Width="16" 
+                                                  Height="16" 
+                                                  Margin="0,0,8,0"/>
+                            <TextBlock Text="Edit Specialization" 
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

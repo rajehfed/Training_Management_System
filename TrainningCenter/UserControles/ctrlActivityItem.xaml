@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="TrainningCenter.UserControles.ctrlActivityItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TrainningCenter.UserControles"
+             xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             x:Name="thisControl"
+             d:DesignWidth="800">
+    <Border Style="{StaticResource CardStyle}" Margin="0 0 8 0" CacheMode="BitmapCache">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Icon Container -->
+            <Border Grid.Column="0"
+                    Width="40" Height="40"
+                    CornerRadius="20"
+                    Background="{Binding IconBackground, ElementName=thisControl}"
+                    Margin="0,0,12,0">
+                <Icons:PackIconMaterial Kind="{Binding IconKind, ElementName=thisControl}"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Width="20" Height="20"
+                                        Foreground="{Binding IconForeground, ElementName=thisControl}"/>
+            </Border>
+
+            <!-- Text Content -->
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Title, ElementName=thisControl}"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                <TextBlock Text="{Binding Description, ElementName=thisControl}"
+                           FontSize="12"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           TextWrapping="Wrap"
+                           Margin="0,4,0,0"/>
+            </StackPanel>
+
+            <!-- Time Stamp -->
+            <TextBlock Grid.Column="2"
+                       Text="{Binding TimeAgo, ElementName=thisControl}"
+                       FontSize="11"
+                       Foreground="{StaticResource TextTertiaryBrush}"
+                       Margin="8,0,0,0"/>
+        </Grid>
+    </Border>
+</UserControl>

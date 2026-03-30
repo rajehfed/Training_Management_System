@@ -1,0 +1,360 @@
+﻿<!--
+═══════════════════════════════════════════════════════════════════════════════
+    TEXTBOX STYLES - Training Center Application
+    
+    This resource dictionary contains all TextBox and input field styles
+    for consistent form design throughout the application.
+    
+    STYLE CATEGORIES:
+    - Modern TextBox (Standard input)
+    - Search TextBox (With search icon)
+    - Multi-line TextBox (For descriptions)
+    - Password Box (Secure input)
+    - Numeric TextBox (Numbers only)
+    - Validation TextBox (With error states)
+    
+    Author: Training Center Team
+    Version: 1.0
+═══════════════════════════════════════════════════════════════════════════════
+-->
+    
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks">
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        MODERN TEXTBOX STYLE
+        
+        Usage: Standard text input fields
+        Features: Rounded corners, focus animation, hover effect
+        Height: 46px for better touch targets
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="ModernTextBox" TargetType="TextBox">
+        <!--<Setter Property="Background" Value="#F8F9FA"/>
+        <Setter Property="BorderBrush" Value="#E0E0E0"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Padding" Value="16,13"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="Height" Value="46"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                        <ScrollViewer x:Name="PART_ContentHost" 
+                                    Margin="{TemplateBinding Padding}"
+                                    VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="BorderBrush" Value="#8147E7"/>
+                <Setter Property="Background" Value="White"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="#B8A3E8"/>
+            </Trigger>
+            <Trigger Property="IsReadOnly" Value="True">
+                <Setter Property="Background" Value="#F0F0F0"/>
+                <Setter Property="Foreground" Value="#999999"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="#F5F5F5"/>
+                <Setter Property="Foreground" Value="#AAAAAA"/>
+            </Trigger>
+        </Style.Triggers>-->
+
+        <Setter Property="Background" Value="White" />
+        <Setter Property="BorderBrush" Value="#E0E0E0" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="Padding" Value="14,12" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <!-- The Border provides the visual frame -->
+                    <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="10">
+
+                        <!-- 
+                        THE FIX IS HERE:
+                        This ScrollViewer is now simple. It has NO Margin.
+                        WPF's default behavior will correctly apply the TextBox's
+                        own Padding property to this element.
+                    -->
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                  Focusable="False"
+                                  HorizontalScrollBarVisibility="Hidden"
+                                  VerticalScrollBarVisibility="Hidden"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="BorderBrush" Value="#8147E7" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="#B8A3E8" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        TEXTBOX WITH ICON STYLE
+        
+        Usage: TextBox with left icon (use with Grid layout)
+        Note: Add 50px left padding to TextBox for icon space
+        
+        Example Usage:
+        <Grid>
+            <TextBox Style="{StaticResource TextBoxWithIcon}" Padding="50,13,16,13"/>
+            <Icons:PackIconMaterial Kind="Account" Margin="16,0,0,0"/>
+        </Grid>
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="TextBoxWithIcon" TargetType="TextBox" BasedOn="{StaticResource ModernTextBox}">
+        <Setter Property="Padding" Value="20,0,0,0"/>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        SEARCH TEXTBOX STYLE
+        
+        Usage: Search input fields
+        Features: Search icon, placeholder text support
+        Note: Wrap in Border with search icon
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="SearchTextBox" TargetType="TextBox">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="12,12"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="#202020"/>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        MULTI-LINE TEXTBOX STYLE
+        
+        Usage: Longer text inputs (descriptions, notes, comments)
+        Features: Scrollable, accepts return, text wrapping
+        Height: Variable (set in XAML)
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="MultiLineTextBox" TargetType="TextBox">
+        <Setter Property="Background" Value="#F8F9FA"/>
+        <Setter Property="BorderBrush" Value="#E0E0E0"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Padding" Value="16,14"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="AcceptsReturn" Value="True"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="MinHeight" Value="100"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                        <ScrollViewer x:Name="PART_ContentHost" 
+                                    Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="BorderBrush" Value="#8147E7"/>
+                <Setter Property="Background" Value="White"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="#B8A3E8"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        MODERN PASSWORDBOX STYLE
+        
+        Usage: Password input fields
+        Features: Same styling as TextBox for consistency
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="ModernPasswordBox" TargetType="PasswordBox">
+        <Setter Property="Background" Value="#F8F9FA"/>
+        <Setter Property="BorderBrush" Value="#E0E0E0"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Padding" Value="16,13"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="Height" Value="46"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="PasswordBox">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                        <ScrollViewer x:Name="PART_ContentHost" 
+                                    Margin="{TemplateBinding Padding}"
+                                    VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="BorderBrush" Value="#8147E7"/>
+                <Setter Property="Background" Value="White"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="#B8A3E8"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="#F5F5F5"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        PASSWORDBOX WITH ICON STYLE
+        
+        Usage: Password field with lock icon
+        Note: Add 50px left padding for icon space
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="PasswordBoxWithIcon" TargetType="PasswordBox" BasedOn="{StaticResource ModernPasswordBox}">
+        <Setter Property="Padding" Value="50,13,16,13"/>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        VALIDATION TEXTBOX STYLE (ERROR STATE)
+        
+        Usage: TextBox with validation error
+        Features: Red border, error message support
+        
+        Usage Example:
+        <TextBox Style="{StaticResource ValidationTextBox}"
+                 Tag="This field is required"/>
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="ValidationTextBox" TargetType="TextBox" BasedOn="{StaticResource ModernTextBox}">
+        <Setter Property="BorderBrush" Value="#DC3545"/>
+        <Setter Property="Background" Value="#FFF5F5"/>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        NUMERIC TEXTBOX STYLE
+        
+        Usage: Number-only input fields
+        Note: Validation should be handled in code-behind
+        Features: Right-aligned text for better readability
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="NumericTextBox" TargetType="TextBox" BasedOn="{StaticResource ModernTextBox}">
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="FontFamily" Value="Consolas"/>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        TRANSPARENT TEXTBOX STYLE
+        
+        Usage: Inline editing, borderless inputs
+        Features: No visible border until focused
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="TransparentTextBox" TargetType="TextBox">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="8,6"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="BorderBrush" Value="#8147E7"/>
+                <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                <Setter Property="Background" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        COMPACT TEXTBOX STYLE
+        
+        Usage: Space-constrained inputs, inline forms
+        Height: 38px (smaller than standard)
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="CompactTextBox" TargetType="TextBox" BasedOn="{StaticResource ModernTextBox}">
+        <Setter Property="Height" Value="38"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="FontSize" Value="13"/>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        ROUNDED TEXTBOX STYLE
+        
+        Usage: Fully rounded pill-shaped inputs
+        Features: High border radius for modern look
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="RoundedTextBox" TargetType="TextBox">
+        <Setter Property="Background" Value="#F8F9FA"/>
+        <Setter Property="BorderBrush" Value="#E0E0E0"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Padding" Value="20,13"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Height" Value="46"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="23">
+                        <ScrollViewer x:Name="PART_ContentHost" 
+                                    Margin="{TemplateBinding Padding}"
+                                    VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="BorderBrush" Value="#8147E7"/>
+                <Setter Property="Background" Value="White"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="#B8A3E8"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

@@ -1,0 +1,617 @@
+﻿<Page x:Class="TrainningCenter.Views.Pages.AssessmentsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TrainningCenter.Views.Pages"
+      mc:Ignorable="d" 
+      xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:UC="clr-namespace:TrainningCenter.UserControles.Groups"
+      xmlns:vm="clr-namespace:TrainningCenter.ViewModel"
+      Background="{StaticResource PageBackgroundBrush}"
+      d:DesignHeight="800" d:DesignWidth="1400"
+      Title="Assessments">
+
+    <Page.Resources>
+        <!-- Assessment Type Color Converter -->
+        <Style x:Key="TypeBadge" TargetType="Border">
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding AssessmentType}" Value="Quiz">
+                    <Setter Property="Background" Value="#E3F2FD"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding AssessmentType}" Value="Exam">
+                    <Setter Property="Background" Value="#FFF3E0"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding AssessmentType}" Value="Project">
+                    <Setter Property="Background" Value="#F3E5F5"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding AssessmentType}" Value="Assignment">
+                    <Setter Property="Background" Value="#E8F5E9"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding AssessmentType}" Value="PracticalTest">
+                    <Setter Property="Background" Value="#FFF9C4"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="TypeBadgeText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding AssessmentType}" Value="Quiz">
+                    <Setter Property="Foreground" Value="#1976D2"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding AssessmentType}" Value="Exam">
+                    <Setter Property="Foreground" Value="#F57C00"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding AssessmentType}" Value="Project">
+                    <Setter Property="Foreground" Value="#7B1FA2"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding AssessmentType}" Value="Assignment">
+                    <Setter Property="Foreground" Value="#388E3C"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding AssessmentType}" Value="PracticalTest">
+                    <Setter Property="Foreground" Value="#F9A825"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="380"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- MAIN CONTENT AREA -->
+        <ScrollViewer Grid.Column="0" 
+                      VerticalScrollBarVisibility="Auto" 
+                      Padding="32">
+            <Grid MaxWidth="1200">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- HEADER SECTION -->
+                <Grid Grid.Row="0" Margin="0,0,0,32">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Title & Description -->
+                    <StackPanel Grid.Column="0">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Icons:PackIconMaterial Kind="ClipboardTextOutline" 
+                                                    VerticalAlignment="Center"
+                                                    Height="32" Width="32"
+                                                    Foreground="{StaticResource PrimaryBrush}"
+                                                    Margin="0,0,12,0"/>
+                            <TextBlock Text="Assessment Library"
+                                       FontSize="32"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"/>
+                        </StackPanel>
+
+                        <TextBlock Text="Manage quizzes, exams, projects, and assignments"
+                                   FontSize="15"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   Margin="0,8,0,0"/>
+                    </StackPanel>
+
+                    <!-- Action Buttons -->
+                    <StackPanel Grid.Column="1" 
+                                Orientation="Horizontal" 
+                                VerticalAlignment="Center">
+                        <Button Name="btnRefresh"
+                                Click="btnRefresh_Click"
+                                Style="{StaticResource RefreshButton}"
+                                Margin="0,0,12,0"
+                                ToolTip="Refresh Data">
+                            <Icons:PackIconMaterial Kind="Refresh"
+                                                    Width="20" Height="20"
+                                                    Foreground="{StaticResource TextSecondaryBrush}"/>
+                        </Button>
+
+                        <Button Name="btnAddNewAssessment"
+                                Click="btnAddNewAssessment_Click"
+                                Style="{StaticResource PrimaryButton}"
+                                Padding="24,12"
+                                FontSize="14">
+                            <StackPanel Orientation="Horizontal">
+                                <Icons:PackIconMaterial Kind="Plus" 
+                                                        Width="20" Height="20" 
+                                                        Margin="0,0,10,0"/>
+                                <TextBlock Text="New Assessment" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <!-- STATISTICS CARDS -->
+                <Grid Grid.Row="1" Margin="0,0,0,32">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Total Assessments -->
+                    <UC:StatCard Label="TOTAL ASSESSMENTS" 
+                                 Value="{Binding TotalAssessments}"
+                                 Foreground="{StaticResource TextPrimaryBrush}"
+                                 BackgroudBrush="{StaticResource BorderLightBrush}"
+                                 IconKind="ClipboardList"
+                                 IconBrush="{StaticResource PrimaryBrush}"
+                                 Margin="0 0 10 0"/>
+
+                    <!-- Active Assessments -->
+                    <UC:StatCard Grid.Column="1"
+                                 Label="ACTIVE ASSESSMENTS" 
+                                 Value="{Binding ActiveAssessments}"
+                                 Foreground="{StaticResource TextTertiaryBrush}"
+                                 BackgroudBrush="{StaticResource SuccessLightBrush}"
+                                 IconKind="ClipboardCheckOutline"
+                                 IconBrush="{StaticResource SuccessBrush}"
+                                 Margin="0 0 10 0"/>
+
+                    <!-- Quizzes -->
+                    <UC:StatCard Grid.Column="2"
+                                 Label="QUIZZES" 
+                                 Value="{Binding QuizCount}"
+                                 Foreground="{StaticResource TextTertiaryBrush}"
+                                 BackgroudBrush="{StaticResource InfoLightBrush}"
+                                 IconKind="HelpCircle"
+                                 IconBrush="{StaticResource InfoBrush}"
+                                 Margin="0 0 10 0"/>
+
+                    <!-- Exams -->
+                    <UC:StatCard Grid.Column="3"
+                                 Label="EXAMS" 
+                                 Value="{Binding ExamCount}"
+                                 Foreground="{StaticResource TextTertiaryBrush}"
+                                 BackgroudBrush="{StaticResource WarningLightBrush}"
+                                 IconKind="ClipboardCheck"
+                                 IconBrush="{StaticResource WarningBrush}"/>
+                </Grid>
+
+                <!-- SEARCH & FILTERS -->
+                <Grid Grid.Row="2" Margin="0,0,0,24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Search Box -->
+                    <Border Grid.Column="0" 
+                            Padding="10" 
+                            Background="White" 
+                            CornerRadius="12" 
+                            Margin="0,0,16,0">
+
+                        <Border.Effect>
+                            <DropShadowEffect Color="#000000" BlurRadius="15" ShadowDepth="0" Opacity="0.06"/>
+                        </Border.Effect>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Icons:PackIconMaterial Grid.Column="0" Kind="Magnify"
+                                                    Width="20" Height="20"
+                                                    Foreground="{StaticResource TextSecondaryBrush}"
+                                                    Margin="16,0,12,0"
+                                                    VerticalAlignment="Center"/>
+
+                            <TextBox Grid.Column="1"
+                                     Name="txtSearch"
+                                     Text="{Binding SearchKeyword, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource ModernTextBox}"
+                                     Tag="Search by name, specialization, or type..."/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Active Only Toggle -->
+                    <CheckBox Grid.Column="1" 
+                              Style="{StaticResource CheckBoxCard}"
+                              IsChecked="{Binding ShowActiveOnly}"
+                              VerticalAlignment="Center"
+                              FontSize="14"
+                              FontWeight="SemiBold">
+                        <StackPanel Orientation="Horizontal">
+                            <Icons:PackIconMaterial Kind="Eye" Width="18" Height="18" 
+                                                    Margin="0,0,8,0"
+                                                    VerticalAlignment="Center"/>
+                            <TextBlock Text="Active Only" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </CheckBox>
+                </Grid>
+
+                <!-- ASSESSMENTS DATA GRID -->
+                <Border Grid.Row="3" 
+                        Background="White" 
+                        CornerRadius="16" 
+                        Padding="0">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#000000" BlurRadius="20" ShadowDepth="0" Opacity="0.08"/>
+                    </Border.Effect>
+
+                    <DataGrid ItemsSource="{Binding AssessmentsView}"
+                              SelectedItem="{Binding SelectedAssessment}"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              IsReadOnly="True"
+                              SelectionMode="Single"
+                              GridLinesVisibility="None"
+                              HeadersVisibility="Column"
+                              RowHeight="72"
+                              Background="Transparent"
+                              BorderThickness="0">
+                        <DataGrid.Columns>
+                            <!-- Assessment Name -->
+                            <DataGridTemplateColumn Header="Assessment" 
+                                                    Width="2*" 
+                                                    SortMemberPath="AssessmentName"
+                                                    CellStyle="{StaticResource ModernDataGridCell}"
+                                                    HeaderStyle="{StaticResource ModernDataGridColumnHeader}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="16,8">
+                                            <TextBlock Text="{Binding AssessmentName}"
+                                                       FontSize="15"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="{StaticResource TextPrimaryBrush}"/>
+                                            <TextBlock Text="{Binding SpecializationName}"
+                                                       FontSize="12"
+                                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                                       Margin="0,4,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- Type -->
+                            <DataGridTemplateColumn Header="Type" 
+                                                    Width="140" 
+                                                    SortMemberPath="AssessmentType"
+                                                    CellStyle="{StaticResource ModernDataGridCell}"
+                                                    HeaderStyle="{StaticResource ModernDataGridColumnHeader}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border Style="{StaticResource TypeBadge}">
+                                            <TextBlock Text="{Binding AssessmentType}" 
+                                                       Style="{StaticResource TypeBadgeText}"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- Marks -->
+                            <DataGridTemplateColumn Header="Marks" Width="120" 
+                                                    CellStyle="{StaticResource ModernDataGridCell}"
+                                                    HeaderStyle="{StaticResource ModernDataGridColumnHeader}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock FontSize="14" FontWeight="SemiBold"
+                                                       Foreground="{StaticResource TextPrimaryBrush}">
+                                                <Run Text="{Binding TotalMarks}"/>
+                                                <Run Text="marks" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                            </TextBlock>
+                                            <TextBlock Text="{Binding PassingPercentage, StringFormat='Pass: {0}'}"
+                                                       FontSize="11"
+                                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                                       Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- Duration -->
+                            <DataGridTemplateColumn Header="Duration" Width="100" 
+                                                    CellStyle="{StaticResource ModernDataGridCell}"
+                                                    HeaderStyle="{StaticResource ModernDataGridColumnHeader}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Icons:PackIconMaterial Kind="ClockOutline" 
+                                                                    Width="16" Height="16"
+                                                                    Foreground="{StaticResource TextTertiaryBrush}"
+                                                                    Margin="0,0,6,0"
+                                                                    VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding DurationDisplay}"
+                                                       FontSize="13"
+                                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- Created By -->
+                            <DataGridTextColumn Header="Created By" 
+                                                Binding="{Binding CreatedByUserName}"
+                                                Width="*"
+                                                FontSize="13"
+                                                CellStyle="{StaticResource ModernDataGridCell}"
+                                                HeaderStyle="{StaticResource ModernDataGridColumnHeader}"/>
+
+                            <!-- Status -->
+                            <DataGridTemplateColumn Header="Status" Width="100" 
+                                                    CellStyle="{StaticResource ModernDataGridCell}"
+                                                    HeaderStyle="{StaticResource ModernDataGridColumnHeader}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border CornerRadius="6" Padding="10,6">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                                            <Setter Property="Background" Value="{StaticResource SuccessLightBrush}"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsActive}" Value="False">
+                                                            <Setter Property="Background" Value="#F5F5F5"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <TextBlock Text="{Binding StatusDisplay}" 
+                                                       FontSize="11" FontWeight="Bold" 
+                                                       HorizontalAlignment="Center">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                                                <Setter Property="Foreground" Value="{StaticResource SuccessBrush}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsActive}" Value="False">
+                                                                <Setter Property="Foreground" Value="{StaticResource TextTertiaryBrush}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Border>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+            </Grid>
+        </ScrollViewer>
+
+        <!-- DETAILS PANEL (RIGHT SIDEBAR) -->
+        <Border Grid.Column="1" Background="White" Padding="32" 
+                BorderBrush="{StaticResource BorderLightBrush}" BorderThickness="1,0,0,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Grid Background="Transparent">
+                    <StackPanel Visibility="{Binding IsAssessmentSelected, Converter={StaticResource BoolToVis}}">
+                        <!-- Header -->
+                        <TextBlock Text="Assessment Details"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               Margin="0,0,0,24"/>
+
+                        <!-- Assessment Name -->
+                        <TextBlock Text="{Binding SelectedAssessment.AssessmentName}"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,8"/>
+
+                        <!-- Specialization -->
+                        <Border Background="{StaticResource PrimaryPaleBrush}"
+                            CornerRadius="8"
+                            Padding="12,8"
+                            HorizontalAlignment="Left"
+                            Margin="0,0,0,24">
+                            <TextBlock Text="{Binding SelectedAssessment.SpecializationName}"
+                                   FontSize="12"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource PrimaryBrush}"/>
+                        </Border>
+
+                        <!-- Key Metrics -->
+                        <Border Background="{StaticResource PageBackgroundBrush}"
+                            CornerRadius="12"
+                            Padding="16"
+                            Margin="0,0,0,20">
+                            <StackPanel>
+                                <Grid Margin="0 0 0 12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Type" 
+                                           FontSize="13"
+                                           Foreground="{StaticResource TextSecondaryBrush}"/>
+                                    <TextBlock Grid.Column="1" 
+                                           Text="{Binding SelectedAssessment.AssessmentType}"
+                                           FontSize="13"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                                </Grid>
+
+                                <Grid Margin="0,0,0,12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Total Marks" 
+                                           FontSize="13"
+                                           Foreground="{StaticResource TextSecondaryBrush}"/>
+                                    <TextBlock Grid.Column="1" 
+                                           Text="{Binding SelectedAssessment.TotalMarks}"
+                                           FontSize="13"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource PrimaryBrush}"/>
+                                </Grid>
+
+                                <Grid Margin="0,0,0,12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Passing Marks" 
+                                           FontSize="13"
+                                           Foreground="{StaticResource TextSecondaryBrush}"/>
+                                    <TextBlock Grid.Column="1" 
+                                           Text="{Binding SelectedAssessment.PassingMark}"
+                                           FontSize="13"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource SuccessBrush}"/>
+                                </Grid>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Duration" 
+                                           FontSize="13"
+                                           Foreground="{StaticResource TextSecondaryBrush}"/>
+                                    <TextBlock Grid.Column="1" 
+                                           Text="{Binding SelectedAssessment.Duration}"
+                                           FontSize="13"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Instructions -->
+                        <TextBlock Text="Instructions"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               Margin="0,0,0,12"/>
+                        <Border Background="{StaticResource PageBackgroundBrush}"
+                            CornerRadius="12"
+                            Padding="16"
+                            Margin="0,0,0,24">
+                            <TextBlock Text="{Binding SelectedAssessment.Instructions}"
+                                   FontSize="13"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   TextWrapping="Wrap"
+                                   LineHeight="20"/>
+                        </Border>
+
+                        <!-- Creator Info -->
+                        <TextBlock Text="Metadata"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               Margin="0,0,0,12"/>
+                        <Border Background="{StaticResource PageBackgroundBrush}"
+                            CornerRadius="12"
+                            Padding="16"
+                            Margin="0,0,0,24">
+                            <StackPanel>
+                                <TextBlock FontSize="12" Margin="0,0,0,8">
+                                <Run Text="Created by:" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                <Run Text="{Binding SelectedAssessment.CreatedByUserName}" 
+                                     FontWeight="SemiBold" 
+                                     Foreground="{StaticResource TextPrimaryBrush}"/>
+                                </TextBlock>
+                                <TextBlock FontSize="12">
+                                <Run Text="Created on:" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                <Run Text="{Binding SelectedAssessment.CreatedAt, StringFormat='{}{0:MMM dd, yyyy}'}" 
+                                     FontWeight="SemiBold" 
+                                     Foreground="{StaticResource TextPrimaryBrush}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Actions -->
+                        <StackPanel>
+                            <Button x:Name="btnEditAssessment"
+                                Click="btnEditAssessment_Click"
+                                Style="{StaticResource PrimaryButton}"
+                                Padding="16,12"
+                                Margin="0,0,0,12">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Icons:PackIconMaterial Kind="Pencil" 
+                                                        Width="18" Height="18"
+                                                        Margin="0,0,8,0"/>
+                                    <TextBlock Text="Edit Assessment"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button x:Name="btnToggleStatus"
+                                Click="btnToggleStatus_Click"
+                                Style="{StaticResource SecondaryButton}"
+                                Padding="16,12">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Icons:PackIconMaterial Width="18" Height="18" Margin="0,0,8,0">
+                                        <Icons:PackIconMaterial.Style>
+                                            <Style TargetType="Icons:PackIconMaterial">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SelectedAssessment.IsActive}" Value="True">
+                                                        <Setter Property="Kind" Value="EyeOff"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding SelectedAssessment.IsActive}" Value="False">
+                                                        <Setter Property="Kind" Value="Eye"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Icons:PackIconMaterial.Style>
+                                    </Icons:PackIconMaterial>
+                                    <TextBlock>
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SelectedAssessment.IsActive}" Value="True">
+                                                        <Setter Property="Text" Value="Disable"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding SelectedAssessment.IsActive}" Value="False">
+                                                        <Setter Property="Text" Value="Enable"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Empty State -->
+        <StackPanel HorizontalAlignment="Center"
+                    Visibility="{Binding IsAssessmentSelected, Converter={StaticResource InverseBoolToVis}}"
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Background="White">
+            <Icons:PackIconMaterial Kind="ClipboardTextOutline"
+                                        Width="80" Height="80"
+                                        Foreground="{StaticResource TextTertiaryBrush}"
+                                        Opacity="0.3"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,0,0,16"/>
+            <TextBlock Text="Select an assessment"
+                           FontSize="16"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           TextAlignment="Center"/>
+            <TextBlock Text="to view details"
+                           FontSize="14"
+                           Foreground="{StaticResource TextTertiaryBrush}"
+                           TextAlignment="Center"
+                           Margin="0,4,0,0"/>
+        </StackPanel>
+    </Grid>
+</Page>

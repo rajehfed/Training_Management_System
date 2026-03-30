@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="TrainningCenter.UserControles.ctrlEmptyStateOverlay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TrainningCenter.UserControles"
+             xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d"
+             x:Name="EmptyStateOverlay">
+    <Grid x:Name="EmptyStatePanel" 
+          Background="{StaticResource PageBackgroundBrush}">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="32">
+            <Icons:PackIconMaterial Kind="{Binding IconKind, ElementName=EmptyStateOverlay}"
+                                    Width="80"
+                                    Height="80"
+                                    Foreground="{StaticResource TextTertiaryBrush}"
+                                    Opacity="0.4"
+                                    HorizontalAlignment="Center"
+                                    Margin="0,0,0,24"/>
+            <TextBlock Text="{Binding Title, ElementName=EmptyStateOverlay}"
+                       x:Name="tbTitle"
+                       FontSize="22"
+                       FontWeight="SemiBold"
+                       Foreground="{StaticResource TextPrimaryBrush}"
+                       HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding Message, ElementName=EmptyStateOverlay}"
+                       x:Name="tbMessage"
+                       FontSize="14"
+                       Foreground="{StaticResource TextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       Margin="0,8,0,0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

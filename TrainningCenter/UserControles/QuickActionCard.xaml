@@ -1,0 +1,133 @@
+﻿<UserControl x:Class="TrainningCenter.UserControles.QuickActionCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TrainningCenter.UserControles"
+             xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             d:DesignHeight="140" d:DesignWidth="200"
+             Name="root">
+    <Border CornerRadius="16"
+            Padding="24,20"
+            Cursor="Hand"
+            MouseLeftButtonDown="Border_MouseLeftButtonDown"
+            MouseEnter="Border_MouseEnter"
+            MouseLeave="Border_MouseLeave"
+            CacheMode="BitmapCache">
+        <!-- Gradient Background -->
+        <Border.Background>
+            <LinearGradientBrush x:Name="gradientBrush" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop x:Name="gradientStart" Color="#8147E7" Offset="0"/>
+                <GradientStop x:Name="gradientEnd" Color="#A980F5" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <!-- Animated Shadow Effect -->
+        <Border.Effect>
+            <DropShadowEffect x:Name="shadowEffect"
+                              RenderingBias="Performance"
+                              Color="{Binding GradientStartColor, ElementName=root}" 
+                              BlurRadius="20" 
+                              ShadowDepth="0" 
+                              Opacity="0.3"/>
+        </Border.Effect>
+
+        <!-- Render Transform for Hover Animation -->
+        <Border.RenderTransform>
+            <TranslateTransform x:Name="translateTransform"/>
+        </Border.RenderTransform>
+
+        <Grid>
+            <!-- Subtle Decorative Circle (Top Right) -->
+            <Ellipse Width="80" Height="80"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,-20,-20,0"
+                     Opacity="0.1">
+                <Ellipse.Fill>
+                    <RadialGradientBrush>
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="Transparent" Offset="1"/>
+                    </RadialGradientBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+
+            <!-- Content -->
+            <StackPanel>
+                <!-- Icon Container with Pulse Animation -->
+                <Border x:Name="iconContainer"
+                        Width="48" Height="48"
+                        CornerRadius="12"
+                        Background="White"
+                        Opacity="0.2"
+                        HorizontalAlignment="Left"
+                        Margin="0,0,0,12">
+                    <Border.RenderTransform>
+                        <ScaleTransform x:Name="iconScale" ScaleX="1" ScaleY="1"/>
+                    </Border.RenderTransform>
+                </Border>
+
+                <!-- Icon (Actual) -->
+                <Icons:PackIconMaterial Kind="{Binding IconKind, ElementName=root}"
+                                        Width="32" Height="32"
+                                        Foreground="White"
+                                        HorizontalAlignment="Left"
+                                        Margin="8,-52,0,12">
+                    <Icons:PackIconMaterial.RenderTransform>
+                        <ScaleTransform x:Name="iconScaleActual" ScaleX="1" ScaleY="1"/>
+                    </Icons:PackIconMaterial.RenderTransform>
+                </Icons:PackIconMaterial>
+
+                <!-- Title -->
+                <TextBlock Text="{Binding Title, ElementName=root}"
+                           FontSize="16"
+                           FontWeight="SemiBold"
+                           Foreground="White"
+                           TextTrimming="CharacterEllipsis"/>
+
+                <!-- Description -->
+                <TextBlock Text="{Binding Description, ElementName=root}"
+                           FontSize="12"
+                           Foreground="White"
+                           Opacity="0.9"
+                           Margin="0,4,0,0"
+                           TextWrapping="Wrap"
+                           MaxHeight="32"
+                           TextTrimming="CharacterEllipsis"/>
+
+                <!-- Subtle Arrow Indicator -->
+                <Border HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Margin="0,8,0,0">
+                    <Icons:PackIconMaterial Kind="ArrowRight"
+                                            Width="16" Height="16"
+                                            Foreground="White"
+                                            Opacity="0.7">
+                        <Icons:PackIconMaterial.RenderTransform>
+                            <TranslateTransform x:Name="arrowTransform"/>
+                        </Icons:PackIconMaterial.RenderTransform>
+                    </Icons:PackIconMaterial>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- Triggers for Animations -->
+        <Border.Triggers>
+            <EventTrigger RoutedEvent="Border.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <!-- Gentle fade in on load -->
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                         From="0" To="1" 
+                                         Duration="0:0:0.4">
+                            <DoubleAnimation.EasingFunction>
+                                <CubicEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Border.Triggers>
+    </Border>
+</UserControl>

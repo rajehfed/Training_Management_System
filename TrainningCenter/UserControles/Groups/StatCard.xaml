@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="TrainningCenter.UserControles.Groups.StatCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TrainningCenter.UserControles.Groups"
+             xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             x:Name="statCardRoot">
+    <Border x:Name="cardBorder" 
+            Style="{StaticResource StatCard}" 
+            Background="{Binding BackgroudBrush, ElementName=statCardRoot}">
+        <StackPanel>
+            <Icons:PackIconMaterial x:Name="IconControl"
+                                    Kind="{Binding IconKind, ElementName=statCardRoot}"
+                                    Foreground="{Binding IconBrush, ElementName=statCardRoot}"
+                                    Width="24"
+                                    Height="24"
+                                    Margin="0,0,0,12"/>
+            <TextBlock x:Name="ValueText"
+                       Text="{Binding Value, ElementName=statCardRoot}"
+                        FontSize="32"
+                        FontWeight="Bold"
+                        Foreground="{StaticResource TextPrimaryBrush}"/>
+            <TextBlock x:Name="LabelText"
+                       Text="{Binding Label, ElementName=statCardRoot}"
+                      FontSize="13"
+                      Foreground="{StaticResource TextSecondaryBrush}"
+                      Margin="0,4,0,0"/>
+        </StackPanel>
+    </Border>
+</UserControl>

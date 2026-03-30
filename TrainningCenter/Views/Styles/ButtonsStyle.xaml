@@ -1,0 +1,463 @@
+﻿<!--
+═══════════════════════════════════════════════════════════════════════════════
+    BUTTON STYLES - Training Center Application
+
+    This resource dictionary contains all button styles used throughout
+    the application for consistent design and behavior.
+
+    STYLE CATEGORIES:
+    - Primary Buttons (Main actions)
+    - Secondary Buttons (Alternative actions)
+    - Icon Buttons (Small action buttons)
+    - Danger Buttons (Delete, destructive actions)
+    - Link Buttons (Text-only buttons)
+    - Toggle Buttons (On/Off states)
+
+    Author: Training Center Team "Fedili Rajeh"
+    Version: 1.0
+    Last Updated: 2025
+═══════════════════════════════════════════════════════════════════════════════
+-->
+    
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks">
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        PRIMARY BUTTON STYLE
+        
+        Usage: Main call-to-action buttons
+        Color: Purple (#8147E7)
+        Examples: "Save", "Create", "Submit", "Add New"
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="PrimaryButton" TargetType="Button">
+        <Setter Property="Background" Value="#8147E7"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="24,13"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Height" Value="44"/>
+        <Setter Property="MinWidth" Value="120"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="10"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#9A5FF0"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#6F3DC0"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="#CCCCCC"/>
+                <Setter Property="Foreground" Value="#888888"/>
+                <Setter Property="Cursor" Value="Arrow"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        SECONDARY BUTTON STYLE
+        
+        Usage: Alternative actions, less emphasis than primary
+        Color: Light Gray (#F5F5F5)
+        Examples: "Cancel", "Back", "Close"
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="SecondaryButton" TargetType="Button">
+        <Setter Property="Background" Value="#F5F5F5"/>
+        <Setter Property="Foreground" Value="#666666"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="24,13"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Height" Value="44"/>
+        <Setter Property="MinWidth" Value="120"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="10"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#E5E5E5"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#D5D5D5"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="#F0F0F0"/>
+                <Setter Property="Foreground" Value="#AAAAAA"/>
+                <Setter Property="Cursor" Value="Arrow"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        OUTLINE BUTTON STYLE
+        
+        Usage: Secondary actions with border emphasis
+        Color: Purple border, transparent background
+        Examples: "View Details", "Learn More"
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="OutlineButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#8147E7"/>
+        <Setter Property="BorderBrush" Value="#8147E7"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Padding" Value="24,11"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Height" Value="44"/>
+        <Setter Property="MinWidth" Value="120"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#F0EDFF"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#E0DAFF"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        DANGER BUTTON STYLE
+        
+        Usage: Destructive actions (Delete, Remove, Cancel subscription)
+        Color: Red (#DC3545)
+        Warning: Always confirm before executing
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="DangerButton" TargetType="Button">
+        <Setter Property="Background" Value="#DC3545"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="24,13"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Height" Value="44"/>
+        <Setter Property="MinWidth" Value="120"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="10"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#C82333"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#BD2130"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        ICON BUTTON STYLE
+        
+        Usage: Small action buttons with icons only
+        Size: 36x36 or 40x40
+        Examples: Edit, Delete, Settings in DataGrids
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="IconButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Width" Value="36"/>
+        <Setter Property="Height" Value="36"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="8">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#F0F0F0"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#E0E0E0"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        ICON BUTTON - EDIT VARIANT
+        
+        Usage: Edit action buttons
+        Color: Purple on hover
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="IconButtonEdit" TargetType="Button" BasedOn="{StaticResource IconButton}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#F0EDFF"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        ICON BUTTON - DELETE VARIANT
+        
+        Usage: Delete action buttons
+        Color: Red on hover
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="IconButtonDelete" TargetType="Button" BasedOn="{StaticResource IconButton}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FFE5E5"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        LINK BUTTON STYLE
+        
+        Usage: Text-only buttons that look like hyperlinks
+        Examples: "Forgot Password?", "View All", "Learn More"
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="LinkButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#8147E7"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <ContentPresenter/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="#9A5FF0"/>
+                <Setter Property="TextBlock.TextDecorations" Value="Underline"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Foreground" Value="#6F3DC0"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        SUCCESS BUTTON STYLE
+        
+        Usage: Success/confirmation actions
+        Color: Green (#28A745)
+        Examples: "Approve", "Confirm", "Activate"
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="SuccessButton" TargetType="Button">
+        <Setter Property="Background" Value="#28A745"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="24,13"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Height" Value="44"/>
+        <Setter Property="MinWidth" Value="120"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="10"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#218838"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#1E7E34"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        ROUNDED ICON BUTTON STYLE
+        
+        Usage: Circular action buttons with icons
+        Shape: Perfect circle
+        Examples: Floating action buttons, quick actions
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="RoundedIconButton" TargetType="Button">
+        <Setter Property="Background" Value="#8147E7"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Width" Value="48"/>
+        <Setter Property="Height" Value="48"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="24">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="#8147E7" 
+                                BlurRadius="15" 
+                                ShadowDepth="0" 
+                                Opacity="0.4"/>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#9A5FF0"/>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect Color="#8147E7" 
+                                        BlurRadius="20" 
+                                        ShadowDepth="0" 
+                                        Opacity="0.6"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        CLOSE BUTTON STYLE (for Modal Windows)
+        
+        Usage: Close/X buttons in modal dialogs
+        Behavior: Transparent, shows red on hover
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="CloseButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Width" Value="36"/>
+        <Setter Property="Height" Value="36"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="8">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FFE5E5"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        REFRESH BUTTON STYLE
+        
+        Usage: Reload/Refresh data buttons
+        Style: Border with icon, purple accent on hover
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="RefreshButton" TargetType="Button">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="#E0E0E0"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Width" Value="44"/>
+        <Setter Property="Height" Value="44"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#F5F5F5"/>
+                <Setter Property="BorderBrush" Value="#8147E7"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

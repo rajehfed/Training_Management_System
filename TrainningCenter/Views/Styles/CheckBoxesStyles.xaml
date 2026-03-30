@@ -1,0 +1,296 @@
+﻿<!--
+═══════════════════════════════════════════════════════════════════════════════
+    CHECKBOX & RADIOBUTTON STYLES - Training Center Application
+    
+    This resource dictionary contains all CheckBox and RadioButton styles
+    for consistent selection controls.
+    
+    FEATURES:
+    - Modern checkbox with smooth check animation
+    - Custom colors and sizes
+    - Toggle switch style
+    - Radio button variations
+    
+    Author: Training Center Team "Fedili Rajeh"
+    Version: 1.0
+═══════════════════════════════════════════════════════════════════════════════
+-->
+    
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks">
+
+    <!-- Boolean to Visibility Converter -->
+    <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        MODERN CHECKBOX STYLE
+        
+        Usage: Standard checkbox controls
+        Features:
+        - Rounded square box
+        - Checkmark icon when checked
+        - Purple theme color
+        - Smooth animations
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="ModernCheckBox" TargetType="CheckBox">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="Foreground" Value="#202020"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <!-- 1. Use a BulletDecorator for correct layout and click logic -->
+                    <BulletDecorator Background="Transparent" VerticalAlignment="Center">
+                        <BulletDecorator.Bullet>
+                            <!-- This Border is the visual checkbox square -->
+                            <Border x:Name="CheckBorder"
+                                Width="22" Height="22"
+                                BorderThickness="2"
+                                BorderBrush="#E0E0E0"
+                                CornerRadius="6"
+                                Background="White">
+
+                                <!-- The checkmark icon's visibility is still handled by the simple converter binding -->
+                                <Icons:PackIconMaterial Kind="Check"
+                                                  Width="14" Height="14"
+                                                  Foreground="White"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  Visibility="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                            </Border>
+                        </BulletDecorator.Bullet>
+
+                        <!-- The ContentPresenter (label) is the "Child" of the BulletDecorator -->
+                        <ContentPresenter Margin="12,0,0,0"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Left"/>
+                    </BulletDecorator>
+
+                    <!-- 2. Use ControlTemplate.Triggers for reliable visual state changes -->
+                    <ControlTemplate.Triggers>
+                        <!-- Trigger for when the CheckBox is checked -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="CheckBorder" Property="Background" Value="#8147E7"/>
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="#8147E7"/>
+                        </Trigger>
+
+                        <!-- Trigger for mouse hover -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="#8147E7"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        LARGE CHECKBOX STYLE
+        
+        Usage: Prominent checkboxes, settings panels
+        Size: 26x26px box
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="LargeCheckBox" TargetType="CheckBox" BasedOn="{StaticResource ModernCheckBox}">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="26" 
+                                Height="26" 
+                                BorderBrush="#E0E0E0" 
+                                BorderThickness="2"
+                                CornerRadius="7"
+                                Background="White"
+                                Margin="0,0,14,0">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                                            <Setter Property="Background" Value="#8147E7"/>
+                                            <Setter Property="BorderBrush" Value="#8147E7"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Icons:PackIconMaterial Kind="Check" 
+                                                  Width="16" 
+                                                  Height="16"
+                                                  Foreground="White"
+                                                  Visibility="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        </Border>
+                        <ContentPresenter VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        TOGGLE SWITCH STYLE
+        
+        Usage: On/Off switches (alternative to checkbox)
+        Features: Sliding toggle animation
+        Perfect for: Settings, Enable/Disable features
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="ToggleSwitch" TargetType="CheckBox">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="#202020"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <StackPanel Orientation="Horizontal">
+                        <!-- Switch Track -->
+                        <Border Width="44" 
+                                Height="24" 
+                                CornerRadius="12"
+                                Background="#E0E0E0"
+                                Margin="0,0,12,0"
+                                x:Name="SwitchTrack">
+                            <!-- Switch Thumb -->
+                            <Border Width="18" 
+                                    Height="18" 
+                                    CornerRadius="9"
+                                    Background="White"
+                                    HorizontalAlignment="Left"
+                                    Margin="3,0,0,0"
+                                    x:Name="SwitchThumb">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#000000" 
+                                                    BlurRadius="4" 
+                                                    ShadowDepth="1" 
+                                                    Opacity="0.3"/>
+                                </Border.Effect>
+                            </Border>
+                        </Border>
+                        <!-- Label Text -->
+                        <ContentPresenter VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <!-- Checked State -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="SwitchTrack" Property="Background" Value="#8147E7"/>
+                            <Setter TargetName="SwitchThumb" Property="HorizontalAlignment" Value="Right"/>
+                            <Setter TargetName="SwitchThumb" Property="Margin" Value="0,0,3,0"/>
+                        </Trigger>
+                        <!-- Hover State -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="SwitchTrack" Property="Opacity" Value="0.9"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        MODERN RADIOBUTTON STYLE
+        
+        Usage: Single selection from multiple options
+        Features: Circular design, purple accent
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="ModernRadioButton" TargetType="RadioButton">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="#202020"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <StackPanel Orientation="Horizontal">
+                        <!-- Radio Circle -->
+                        <Border Width="20" 
+                                Height="20" 
+                                BorderBrush="#E0E0E0" 
+                                BorderThickness="2"
+                                CornerRadius="10"
+                                Background="White"
+                                Margin="0,0,10,0"
+                                x:Name="OuterCircle">
+                            <!-- Inner Dot -->
+                            <Ellipse Width="10" 
+                                    Height="10"
+                                    Fill="#8147E7"
+                                    x:Name="InnerDot"
+                                    Visibility="Collapsed"/>
+                        </Border>
+                        <!-- Label Text -->
+                        <ContentPresenter VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="InnerDot" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="OuterCircle" Property="BorderBrush" Value="#8147E7"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="OuterCircle" Property="BorderBrush" Value="#8147E7"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+        CHECKBOX CARD STYLE
+        
+        Usage: Selectable card/tile layouts
+        Features: Full card acts as checkbox, visual selection highlight
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <Style x:Key="CheckBoxCard" TargetType="CheckBox">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Border Background="White"
+                            BorderBrush="#E0E0E0"
+                            BorderThickness="2"
+                            CornerRadius="10"
+                            Padding="16"
+                            x:Name="CardBorder">
+                        <Grid>
+                            <!-- Checkmark Corner Badge -->
+                            <Border Background="#8147E7"
+                                    CornerRadius="0,8,0,8"
+                                    Width="24"
+                                    Height="24"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Margin="0,-16,-16,0"
+                                    Visibility="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Icons:PackIconMaterial Kind="Check" 
+                                                      Width="14" 
+                                                      Height="14"
+                                                      Foreground="White"/>
+                            </Border>
+                            <!-- Card Content -->
+                            <ContentPresenter/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="CardBorder" Property="BorderBrush" Value="#8147E7"/>
+                            <Setter TargetName="CardBorder" Property="Background" Value="#F0EDFF"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="CardBorder" Property="BorderBrush" Value="#B8A3E8"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

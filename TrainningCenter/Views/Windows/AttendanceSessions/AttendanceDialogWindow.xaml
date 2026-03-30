@@ -1,0 +1,615 @@
+﻿<Window x:Class="TrainningCenter.Views.Windows.AttendanceSessions.AttendanceDialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TrainningCenter.Views.Windows.AttendanceSessions"
+        mc:Ignorable="d"
+        xmlns:Icons="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+        xmlns:converters="clr-namespace:TrainningCenter.Converters"
+        Title="Take Attendance"
+        Height="750"
+        Width="1100"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Window.Resources>
+        <!-- Attendance Status Button Style -->
+        <Style x:Key="StatusButton" TargetType="RadioButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="border"
+                                Background="White"
+                                BorderBrush="#E0E0E0"
+                                BorderThickness="2"
+                                CornerRadius="8"
+                                Padding="12,8"
+                                Cursor="Hand">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                <Setter TargetName="border" Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <converters:AttendanceStatusToBooleanConverter x:Key="AttendanceStatusToBool"/>
+    </Window.Resources>
+
+    <Border Background="White"
+            Margin="20"
+            CornerRadius="24"
+            BorderBrush="{StaticResource PrimaryBrush}"
+            BorderThickness="2"
+            MouseLeftButtonDown="Border_MouseLeftButtonDown">
+        <Border.Effect>
+            <DropShadowEffect Color="#8147E7" 
+                              BlurRadius="40" 
+                              ShadowDepth="0" 
+                              Opacity="0.4"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- HEADER -->
+            <Border Grid.Row="0"
+                    CornerRadius="22,22,0,0"
+                    Padding="40,32">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#8147E7" Offset="0"/>
+                        <GradientStop Color="#A980F5" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Icon -->
+                    <Border Grid.Column="0"
+                            Width="70" Height="70"
+                            CornerRadius="35"
+                            Background="White"
+                            Margin="0,0,24,0">
+                        <Icons:PackIconMaterial Kind="ClipboardCheck"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Width="35" Height="35"
+                                                Foreground="{StaticResource PrimaryBrush}"/>
+                    </Border>
+
+                    <!-- Title & Session Info -->
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="Take Attendance"
+                                   FontSize="28"
+                                   FontWeight="Bold"
+                                   Foreground="White"/>
+                        <TextBlock x:Name="tbSessionInfo"
+                                   Text="AI Fundamentals - Group A | Dec 21, 2025"
+                                   FontSize="16"
+                                   Foreground="White"
+                                   Opacity="0.9"
+                                   Margin="0,8,0,0"/>
+                    </StackPanel>
+
+                    <!-- Close Button -->
+                    <Button Grid.Column="2"
+                            Name="btnClose"
+                            Style="{StaticResource CloseButton}"
+                            Click="btnClose_Click"
+                            VerticalAlignment="Top">
+                        <Icons:PackIconMaterial Kind="Close"
+                                                Width="20" Height="20"
+                                                Foreground="White"/>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!-- MAIN CONTENT -->
+            <Grid Grid.Row="1" Margin="40,32,40,24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="320"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Students List -->
+                <ScrollViewer Grid.Column="0"
+                              VerticalScrollBarVisibility="Auto"
+                              Margin="0,0,24,0">
+                    <StackPanel>
+                        <!-- Quick Actions Bar -->
+                        <Border Background="{StaticResource PageBackgroundBrush}"
+                                CornerRadius="12"
+                                Padding="20,16"
+                                Margin="0,0,0,20">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0"
+                                           Text="⚡ Quick Actions:"
+                                           FontSize="14"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextPrimaryBrush}"
+                                           VerticalAlignment="Center"/>
+
+                                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                    <Button Style="{StaticResource SuccessButton}"
+                                            Padding="16,8"
+                                            FontSize="13"
+                                            Name="btnMarkAllPresent"
+                                            Click="btnMarkAllPresent_Click"
+                                            Margin="0 0 8 0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Icons:PackIconMaterial Kind="AccountMultipleCheck"
+                                                                    Width="20" Height="20"/>
+                                            <TextBlock Text="Mark All Present"
+                                                       Margin="10 0 0 0"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Style="{StaticResource DangerButton}"
+                                            Padding="16,8"
+                                            FontSize="13"
+                                            Name="btnMarkAllAbsent"
+                                            Click="btnMarkAllAbsent_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Icons:PackIconMaterial Kind="AccountMultipleRemove"
+                                                                    Width="20" Height="20"/>
+                                            <TextBlock Text="Mark All Absent"
+                                                       Margin="10 0 0 0"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Students -->
+                        <ItemsControl x:Name="studentsListControl">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="White"
+                                            BorderBrush="{StaticResource BorderBrush}"
+                                            BorderThickness="2"
+                                            CornerRadius="14"
+                                            Padding="20"
+                                            Margin="0,0,0,12">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Student Avatar & Info -->
+                                            <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,0,20,0">
+                                                <!-- Avatar -->
+                                                <Border Width="50" Height="50"
+                                                        CornerRadius="25"
+                                                        Margin="0,0,16,0">
+                                                    <Border.Background>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                            <GradientStop Color="#8147E7" Offset="0"/>
+                                                            <GradientStop Color="#A980F5" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Border.Background>
+
+                                                    <TextBlock Text="{Binding Initials}"
+                                                               FontSize="18"
+                                                               FontWeight="Bold"
+                                                               Foreground="White"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"/>
+                                                </Border>
+
+                                                <!-- Name & Number -->
+                                                <StackPanel VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding FullName}"
+                                                               FontSize="16"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{StaticResource TextPrimaryBrush}"/>
+                                                    <TextBlock Text="{Binding StudentNumber}"
+                                                               FontSize="12"
+                                                               Foreground="{StaticResource TextSecondaryBrush}"
+                                                               Margin="0,4,0,0"/>
+                                                </StackPanel>
+                                            </StackPanel>
+
+                                            <!-- Attendance Status Buttons -->
+                                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                                <!-- Present -->
+                                                <RadioButton x:Name="rbPresent"
+                                                             Style="{StaticResource StatusButton}"
+                                                             GroupName="{Binding StudentID}"
+                                                             Tag="#28A745"
+                                                             Margin="0,0,8,0"
+                                                             IsChecked="{Binding AttendanceStatus,
+                                                                            Mode=TwoWay,
+                                                                            Converter={StaticResource AttendanceStatusToBool},
+                                                                            ConverterParameter=Present}">
+                                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                                                        <Icons:PackIconMaterial Kind="Check"
+                                                                                Width="16" Height="16"
+                                                                                Margin="0,0,6,0">
+                                                            <Icons:PackIconMaterial.Style>
+                                                                <Style TargetType="Icons:PackIconMaterial">
+                                                                    <Setter Property="Foreground" Value="#28A745"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsChecked, ElementName=rbPresent}" Value="True">
+                                                                            <Setter Property="Foreground" Value="White"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Icons:PackIconMaterial.Style>
+                                                        </Icons:PackIconMaterial>
+
+                                                        <TextBlock Text="Present" FontSize="13" FontWeight="SemiBold">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="Foreground" Value="#28A745"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsChecked, ElementName=rbPresent}" Value="True">
+                                                                            <Setter Property="Foreground" Value="White"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                    </StackPanel>
+                                                </RadioButton>
+
+                                                <!-- Late -->
+                                                <RadioButton x:Name="rbLate"
+                                                             Style="{StaticResource StatusButton}"
+                                                             GroupName="{Binding StudentID}"
+                                                             Tag="#FF9800"
+                                                             Margin="0,0,8,0"
+                                                             IsChecked="{Binding AttendanceStatus,
+                                                                            Mode=TwoWay,
+                                                                            Converter={StaticResource AttendanceStatusToBool},
+                                                                            ConverterParameter=Late}">
+                                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                                                        <Icons:PackIconMaterial Kind="ClockAlert"
+                                                                                Width="16" Height="16"
+                                                                                Margin="0,0,6,0">
+                                                            <Icons:PackIconMaterial.Style>
+                                                                <Style TargetType="Icons:PackIconMaterial">
+                                                                    <Setter Property="Foreground" Value="#FF9800"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsChecked, ElementName=rbLate}" Value="True">
+                                                                            <Setter Property="Foreground" Value="White"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Icons:PackIconMaterial.Style>
+                                                        </Icons:PackIconMaterial>
+                                                        <TextBlock Text="Late" FontSize="13" FontWeight="SemiBold">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="Foreground" Value="#FF9800"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsChecked, ElementName=rbLate}" Value="True">
+                                                                            <Setter Property="Foreground" Value="White"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                    </StackPanel>
+                                                </RadioButton>
+
+                                                <!-- Absent -->
+                                                <RadioButton x:Name="rbAbsent"
+                                                             Style="{StaticResource StatusButton}"
+                                                             GroupName="{Binding StudentID}"
+                                                             Tag="#DC3545"
+                                                             IsChecked="{Binding AttendanceStatus,
+                                                                            Mode=TwoWay,
+                                                                            Converter={StaticResource AttendanceStatusToBool},
+                                                                            ConverterParameter=Absent}">
+                                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                                                        <Icons:PackIconMaterial Kind="Close"
+                                                                                Width="16" Height="16"
+                                                                                Margin="0,0,6,0">
+                                                            <Icons:PackIconMaterial.Style>
+                                                                <Style TargetType="Icons:PackIconMaterial">
+                                                                    <Setter Property="Foreground" Value="#DC3545"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsChecked, ElementName=rbAbsent}" Value="True">
+                                                                            <Setter Property="Foreground" Value="White"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Icons:PackIconMaterial.Style>
+                                                        </Icons:PackIconMaterial>
+                                                        <TextBlock Text="Absent" FontSize="13" FontWeight="SemiBold">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="Foreground" Value="#DC3545"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsChecked, ElementName=rbAbsent}" Value="True">
+                                                                            <Setter Property="Foreground" Value="White"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                    </StackPanel>
+                                                </RadioButton>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Right Panel: Summary -->
+                <Border Grid.Column="1"
+                        Background="{StaticResource PageBackgroundBrush}"
+                        CornerRadius="16"
+                        Padding="24"
+                        VerticalAlignment="Top">
+                    <StackPanel>
+                        <TextBlock Text="📊 Attendance Summary"
+                                   FontSize="18"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   Margin="0,0,0,20"/>
+
+                        <!-- Present -->
+                        <Border Background="#E7F6EC"
+                                CornerRadius="12"
+                                Padding="16"
+                                Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0"
+                                        Background="{StaticResource SuccessBrush}"
+                                        CornerRadius="10"
+                                        Width="40" Height="40"
+                                        Margin="0,0,12,0">
+                                    <Icons:PackIconMaterial Kind="Check"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center"
+                                                            Width="20" Height="20"
+                                                            Foreground="White"/>
+                                </Border>
+
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="PRESENT"
+                                               FontSize="11"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource SuccessBrush}"/>
+                                    <TextBlock Text="Students attended"
+                                               FontSize="12"
+                                               Foreground="{StaticResource TextSecondaryBrush}"
+                                               Margin="0,2,0,0"/>
+                                </StackPanel>
+
+                                <TextBlock Grid.Column="2"
+                                           x:Name="tbPresentCount"
+                                           Text="{Binding PresentCount}"
+                                           FontSize="28"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource SuccessBrush}"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <Border Background="#FFF3E0"
+                                CornerRadius="12"
+                                Padding="16"
+                                Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0"
+                                        Background="{StaticResource WarningBrush}"
+                                        CornerRadius="10"
+                                        Width="40" Height="40"
+                                        Margin="0,0,12,0">
+                                    <Icons:PackIconMaterial Kind="ClockAlert"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center"
+                                                            Width="20" Height="20"
+                                                            Foreground="White"/>
+                                </Border>
+
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="LATE"
+                                               FontSize="11"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource WarningBrush}"/>
+                                    <TextBlock Text="Arrived late"
+                                               FontSize="12"
+                                               Foreground="{StaticResource TextSecondaryBrush}"
+                                               Margin="0,2,0,0"/>
+                                </StackPanel>
+
+                                <TextBlock Grid.Column="2"
+                                           x:Name="tbLateCount"
+                                           Text="{Binding LateCount}"
+                                           FontSize="28"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource WarningBrush}"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Absent -->
+                        <Border Background="#FFE5E5"
+                                CornerRadius="12"
+                                Padding="16"
+                                Margin="0,0,0,20">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0"
+                                        Background="{StaticResource DangerBrush}"
+                                        CornerRadius="10"
+                                        Width="40" Height="40"
+                                        Margin="0,0,12,0">
+                                    <Icons:PackIconMaterial Kind="Close"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center"
+                                                            Width="20" Height="20"
+                                                            Foreground="White"/>
+                                </Border>
+
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="ABSENT"
+                                               FontSize="11"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource DangerBrush}"/>
+                                    <TextBlock Text="Did not attend"
+                                               FontSize="12"
+                                               Foreground="{StaticResource TextSecondaryBrush}"
+                                               Margin="0,2,0,0"/>
+                                </StackPanel>
+
+                                <TextBlock Grid.Column="2"
+                                           x:Name="tbAbsentCount"
+                                           Text="{Binding AbsentCount}"
+                                           FontSize="28"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource DangerBrush}"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Total & Percentage -->
+                        <Border Background="White"
+                                BorderBrush="{StaticResource BorderBrush}"
+                                BorderThickness="2"
+                                CornerRadius="12"
+                                Padding="20">
+                            <StackPanel>
+                                <TextBlock Text="ATTENDANCE RATE"
+                                           FontSize="11"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource TextTertiaryBrush}"
+                                           HorizontalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Center"
+                                            Margin="0,12,0,0">
+                                    <TextBlock x:Name="tbAttendanceRate"
+                                               Text="{Binding AttendanceRate}"
+                                               FontSize="48"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource PrimaryBrush}"/>
+                                    <TextBlock Text="%"
+                                               FontSize="28"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource PrimaryBrush}"
+                                               VerticalAlignment="Bottom"
+                                               Margin="4,0,0,10"/>
+                                </StackPanel>
+                                <TextBlock x:Name="tbTotalStudents"
+                                           Text="0 / 0 Students"
+                                           FontSize="13"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,8,0,0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Session Notes -->
+                        <TextBlock Text="📝 Notes (Optional)"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   Margin="0,24,0,8"/>
+                        <TextBox x:Name="txtNotes"
+                                 Style="{StaticResource MultiLineTextBox}"
+                                 MinHeight="100"
+                                 Tag="Add session notes..."/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- FOOTER -->
+            <Border Grid.Row="2"
+                    Background="{StaticResource PageBackgroundBrush}"
+                    BorderBrush="{StaticResource BorderLightBrush}"
+                    BorderThickness="0,1,0,0"
+                    Padding="40,20"
+                    CornerRadius="0,0,22,22">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0"
+                               FontSize="13"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               VerticalAlignment="Center">
+                        <Run Text="💡 Tip: Use Quick Actions to mark multiple students at once"/>
+                    </TextBlock>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                        <Button Content="Cancel"
+                                Style="{StaticResource SecondaryButton}"
+                                Click="btnClose_Click"
+                                Padding="24,12"
+                                MinWidth="120"
+                                Margin="0,0,12,0"/>
+
+                        <Button x:Name="btnSaveAttendance"
+                                Style="{StaticResource SuccessButton}"
+                                Click="btnSaveAttendance_Click"
+                                Padding="32,12"
+                                MinWidth="180"
+                                FontSize="14"
+                                FontWeight="SemiBold">
+                            <StackPanel Orientation="Horizontal">
+                                <Icons:PackIconMaterial Kind="ContentSave" Margin="0 0 10 0" />
+                                <TextBlock Text="Save Attendance"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>
