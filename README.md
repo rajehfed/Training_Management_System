@@ -19,6 +19,8 @@ manage students, groups, enrollments, and payment plans with ease.**
 
 <br/>
 
+![Main Dashboard](images/Dashboard.png)
+
 [![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://dotnet.microsoft.com/)
 [![WPF](https://img.shields.io/badge/WPF-C%23%20%2F%20.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![SQL Server](https://img.shields.io/badge/SQL_Server-Database-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/en-us/sql-server)
@@ -46,7 +48,7 @@ Whether you're running a small coding bootcamp or a multi-group professional tra
 | 🔍 Select Student | 💳 Choose Payment Plan | ✅ Confirm Enrollment |
 |:-:|:-:|:-:|
 | Search & pick a student | Full payment or installments | Review before confirming |
-| ![Step 1](https://placehold.co/260x170/F3EDFF/8147E7?text=Step+1&font=raleway) | ![Step 2](https://placehold.co/260x170/F3EDFF/8147E7?text=Step+2&font=raleway) | ![Step 3](https://placehold.co/260x170/F3EDFF/8147E7?text=Step+3&font=raleway) |
+| ![Step 1](images/Step1.png) | ![Step 2](images/Step2.png) | ![Step 3](images/Step3.png) |
 
 > 💡 *Replace placeholders above with real screenshots for best results on GitHub.*
 
