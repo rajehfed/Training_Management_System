@@ -118,29 +118,38 @@ Two flexible options tailored to each student's situation:
 ## 📁 Project Structure
 
 ```
-TrainningCenter/
+TrainingManagementSystem/           # Root Folder
 │
-├── Models/                        # Data models (Student, Group, Subscription, Payment)
-├── ViewModels/                    # MVVM ViewModels — business logic per view
+├── TrainingManagement.sln          # SINGLE Solution file for all 4 projects
+├── .gitignore                      # Updated to hide bin/obj/generated files
+├── README.md                       # Main documentation with images
 │
-├── Views/
-│   ├── Windows/
-│   │   ├── Groups/
-│   │   │   └── AddMemberToGroup.xaml    # 3-step enrollment wizard
-│   │   └── ...                          # Other windows
-│   └── Controls/                        # Reusable UI components
+├── images/                         # Project Screenshots
+│   ├── dashboard.png
+│   └── assessments.png
 │
-├── Services/                      # Business logic & operations
-├── Repositories/                  # SQL Server data access layer
+├── TrainingCenter-UI/              # WPF Project (Renamed for clarity)
+│   ├── App.xaml
+│   ├── MainWindow.xaml
+│   ├── Converters/
+│   ├── Helpers/
+│   ├── UserControls/               # Clean: No .g.cs files here!
+│   └── Views/
 │
-├── Resources/
-│   ├── Styles/                    # Buttons, cards, inputs, brush definitions
-│   └── Icons/                     # App icons & assets
+├── TrainingCenter-BusinessLayer/   # Logic Layer
+│   ├── Activity.cs
+│   ├── Student.cs
+│   └── ...
 │
-├── Database/
-│   └── setup.sql                  # DB schema creation script
+├── TrainingCenter-DataAccessLayer/ # Data Layer
+│   ├── clsActivity.cs
+│   ├── DataBaseSettings.cs
+│   └── ...
 │
-└── App.xaml                       # App entry point & global resources
+└── TrainingCenter-Entities/        # DTOs
+    ├── ActivityDTO.cs
+    ├── StudentDTO.cs
+    └── ...
 ```
 
 ---
